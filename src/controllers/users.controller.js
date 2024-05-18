@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 // Importación de módulos propios
 const User = require('../models/user.model');
 const Mail = require('../helpers/email_utils')
-const { createToken } = require('../helpers/utils');
+const { createToken } = require('../helpers/token_utils');
 
 
 
