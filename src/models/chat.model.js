@@ -1,11 +1,11 @@
 // Definición de métodos para interactuar con tabla mensaje de BBDD
 
-const insertMessage = (text, username, grupo) => {
-    return db.query(`INSERT INTO mensaje (idUsuario, texto, idGrupo) VALUES (?, ?, ?)`, [username, text, grupo]);;
+const insertMessage = (idUsuario, idGrupo, fecha_hora, texto) => {
+    return db.query(`INSERT INTO mensaje (idUsuario, idGrupo, fecha_hora, texto) VALUES (?, ?, ?, ?)`, [idUsuario, idGrupo, fecha_hora, texto]);;
 };
 
 const selectMessages = (id_grupo) => {
-    return db.query(`SELECT texto, idUsuario FROM mensaje WHERE idGrupo = ?`, [id_grupo]);
+    return db.query(`SELECT idUsuario, fecha_hora, texto FROM mensaje WHERE idGrupo = ?`, [id_grupo]);
 
 };
 

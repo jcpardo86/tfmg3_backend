@@ -61,7 +61,7 @@ io.on('connection', async (socket) =>{
     socket.on('send-message', async (msg) => {
 
         try {
-            const [result] = await Chat.insertMessage(msg.texto, 2, msg.grupo);
+            const [result] = await Chat.insertMessage(msg.idUsuario, msg.idGrupo, msg.fecha_hora, msg.texto);
         } catch(error) {
             console.log(error);
         }
