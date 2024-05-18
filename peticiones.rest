@@ -1,0 +1,81 @@
+@PORT = 3000
+@HOST = http://localhost:{{PORT}}
+
+GET {{HOST}}/api/groups/1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoxMSwiZXhwIjoxNzE1NzA3MTIzLCJpYXQiOjE3MTU3MDY4MjN9.fNFTXAxIsqANtmX-h2tbFLzmQAevUBejC21Q_IaX0o4
+
+###
+GET {{HOST}}/api/groups/group/1
+
+###
+GET {{HOST}}/api/groups/users/2
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoxMSwiZXhwIjoxNzE1Njk5Mzg3LCJpYXQiOjE3MTU2OTkwODd9.xtirDdja6SeVZKKx-vD5eu2cVfAHRcmayTESV9aMcNs
+
+###     
+POST {{HOST}}/api/groups/
+Content-Type: application/json
+
+{
+    "nombre": "Comida de Empresa 2023",
+    "descripcion": "Comida de empresa con compañeros en Valencia"
+}
+
+###
+POST {{HOST}}/api/groups/user
+Content-Type: application/json
+
+{
+    "idGrupo": 5,
+    "idUsuario": 2,
+    "porcentaje": 100,
+    "rol": "admin"
+}
+
+###
+DELETE {{HOST}}/api/groups/15
+
+###
+GET {{HOST}}/api/users/6
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoxMSwiZXhwIjoxNzE1NzAxMTUxLCJpYXQiOjE3MTU3MDA4NTF9.gw1jSP6riOmj7Qx36ITsSirHZdxfG2FuxdKL-uyPI2A
+
+###
+POST {{HOST}}/api/users/register
+Content-Type: application/json
+
+{
+    "nombre": "Antonio",
+    "apellidos": "López",
+    "email": "antonio.lopez@gmail.com",
+    "password": "12345"
+}
+
+###
+POST {{HOST}}/api/users/login
+Content-Type: application/json
+
+{
+    "email": "Homeromoncada110@gmail.com",
+    "password": "12345"
+}
+
+###
+GET {{HOST}}/api/spents/2
+
+###
+GET {{HOST}}/api/spents/total/1
+
+###
+GET {{HOST}}/api/spents/saldos/1
+
+###
+POST {{HOST}}/api/spents/
+Content-Type: application/json
+
+{
+    "idUsuario": 3,
+    "idGrupo": 1,
+    "descripcion": "reparación caldera",
+    "importe": 74,
+    "fecha": "2024-04-21"
+}
+
