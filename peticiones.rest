@@ -16,7 +16,7 @@ POST {{HOST}}/api/groups/
 Content-Type: application/json
 
 {
-    "nombre": "Comida de Empresa 2023",
+    "nombre": "Comida de empresa 2023",
     "descripcion": "Comida de empresa con compañeros en Valencia"
 }
 
@@ -25,8 +25,8 @@ POST {{HOST}}/api/groups/user
 Content-Type: application/json
 
 {
-    "idGrupo": 5,
-    "idUsuario": 2,
+    "idGrupo": 3,
+    "idUsuario": 18,
     "porcentaje": 100,
     "rol": "admin"
 }
@@ -43,10 +43,11 @@ POST {{HOST}}/api/users/register
 Content-Type: application/json
 
 {
-    "nombre": "Antonio",
-    "apellidos": "López",
-    "email": "antonio.lopez@gmail.com",
-    "password": "12345"
+    "nombre": "Sonia",
+    "apellidos": "Fernández Cruz",
+    "email": "sonia.fernandez@gmail.com",
+    "password": "12345",
+    "imagen": "foto_usuario.png"
 }
 
 ###
@@ -72,10 +73,10 @@ POST {{HOST}}/api/spents/
 Content-Type: application/json
 
 {
-    "idUsuario": 3,
-    "idGrupo": 1,
-    "descripcion": "reparación caldera",
-    "importe": 74,
-    "fecha": "2024-04-21"
+    "idUsuario": 18,
+    "idGrupo": 3,
+    "descripcion": "regalo",
+    "importe": 46,
+    "fecha": "2024-02-18"
 }
 
