@@ -8,8 +8,8 @@ const selectUserByEmail = (email) => {
     return db.query(`SELECT * FROM usuario WHERE email = ?`, [email]);
 };
 
-const insertUser = ({nombre, apellidos, email, password}) => {
-    return db.query(`INSERT INTO usuario (nombre, apellidos, email, password) VALUES (?, ?, ?, ?)`, [nombre, apellidos, email, password]);
+const insertUser = ({nombre, apellidos, email, password, imagen}) => {
+    return db.query(`INSERT INTO usuario (nombre, apellidos, email, password, imagen) VALUES (?, ?, ?, ?, ?)`, [nombre, apellidos, email, password, imagen]);
 
 };
 
