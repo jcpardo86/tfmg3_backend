@@ -73,10 +73,22 @@ POST {{HOST}}/api/spents/
 Content-Type: application/json
 
 {
-    "idUsuario": 18,
-    "idGrupo": 3,
+    "idUsuario": 1,
+    "idGrupo": 1,
     "descripcion": "regalo",
     "importe": 46,
+    "fecha": "2024-02-18"
+}
+
+###
+PUT {{HOST}}/api/spents/4
+Content-Type: application/json
+
+{
+    "idGrupo": 1,
+    "idUsuario": 1,
+    "importe": 46,
+    "descripcion": "regalo",
     "fecha": "2024-02-18"
 }
 

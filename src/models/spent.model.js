@@ -21,6 +21,19 @@ const insertSpent = ({idUsuario, idGrupo, descripcion, importe, fecha}) => {
 
 };
 
+const updateSpent=(id_spend, {idUsuario,importe,descripcion,fecha}) =>{
+
+   
+    return db.query(
+            `update gasto
+            set idUsuario =?,
+                importe = ?,
+                descripcion = ?,
+                fecha = ?
+                where idGasto = ?`,
+                [idUsuario,importe,descripcion,fecha,id_spend]
+    )
+}
 
 // Exportación de módulos
 module.exports = {
@@ -28,5 +41,6 @@ module.exports = {
     selectTotalSpentByUser,
     selectSpentById,
     selectTotalSpentByGroup,
-    insertSpent
+    insertSpent,
+    updateSpent
 };
