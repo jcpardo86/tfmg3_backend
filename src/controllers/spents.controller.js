@@ -49,6 +49,25 @@ const updateSpent =async (req, res, next) => {
           next(err);
       }
   }
+  const deleteSpent = async (req, res, next) => {
+    
+   
+    try{
+
+        const {id_spend}  = req.params;
+        const[result] = await Spents.DeleteSpentById(id_spend);
+        if(result.affectedRows === 1 ){
+            res.json({message: 'Se ha borrado el gasto'});
+
+        }else{
+            res.status(404).json({ message: 'El gasto no existe'});
+        }
+      
+
+    }catch(error){
+        next(error);
+    }
+}
 
 const getTotalSpentByGroup = async (req, res) => {
     try {
@@ -127,5 +146,6 @@ module.exports = {
     getSpentsByUser,
     createSpent,
     getCuentas,
-    updateSpent 
+    updateSpent,
+    deleteSpent
 }

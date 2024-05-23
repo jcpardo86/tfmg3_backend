@@ -60,7 +60,7 @@ Content-Type: application/json
 }
 
 ###
-GET {{HOST}}/api/spents/2
+GET {{HOST}}/api/spents/5
 
 ###
 GET {{HOST}}/api/spents/total/1
@@ -92,3 +92,5 @@ Content-Type: application/json
     "fecha": "2024-02-18"
 }
 
+###
+DELETE {{HOST}}/api/spents/5

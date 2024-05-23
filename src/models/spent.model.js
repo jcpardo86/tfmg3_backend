@@ -20,6 +20,9 @@ const insertSpent = ({idUsuario, idGrupo, descripcion, importe, fecha}) => {
     return db.query(`INSERT INTO gasto (idUsuario, idGrupo, descripcion, importe, fecha) VALUES (?, ?, ?, ?, ?)`, [idUsuario, idGrupo, descripcion, importe, fecha]);
 
 };
+const DeleteSpentById=(id_spent)=>{
+    return db.query('delete from gasto where idGasto = ?', [id_spent]);       
+}
 
 const updateSpent=(id_spend, {idUsuario,importe,descripcion,fecha}) =>{
 
@@ -42,5 +45,6 @@ module.exports = {
     selectSpentById,
     selectTotalSpentByGroup,
     insertSpent,
-    updateSpent
+    updateSpent,
+    DeleteSpentById
 };
