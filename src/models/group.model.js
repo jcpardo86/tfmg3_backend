@@ -24,7 +24,6 @@ const deleteGroup = (id_group) => {
     return db.query(`Delete FROM grupo where idGrupo = ?`, [id_group]);
 };
 
-
 // Exportación de módulos
 module.exports = {
     selectGroupsByUser,

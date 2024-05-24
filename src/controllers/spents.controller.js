@@ -15,6 +15,16 @@ const getSpentsByGroup = async (req, res) => {
     };
 };
 
+const getSpentById = async (req, res) => {
+    try {
+        const [ spent ] = await Spents.selectSpentById(req.params.id_spent);
+        res.json(spent[0]); 
+
+    } catch(err) {
+        res.status(500).json({ error: err.message });
+    };
+};
+
 const getSpentsByUser = async (req, res) => {
     try {
         const [ spents ] = await Spents.selectTotalSpentByUser(req.params.id_user);
@@ -147,5 +157,6 @@ module.exports = {
     createSpent,
     getCuentas,
     updateSpent,
-    deleteSpent
+    deleteSpent,
+    getSpentById
 }
