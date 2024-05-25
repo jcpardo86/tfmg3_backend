@@ -48,6 +48,8 @@ const createGroup = async (req, res) => {
 };
 
 const addUserToGroup = async (req, res) => {
+    console.log(req)
+    console.log(res)
     try {
         const [result] = await Grupos.insertUserToGroup(req.body);
         res.json(result);
