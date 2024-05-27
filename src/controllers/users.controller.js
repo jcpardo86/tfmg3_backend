@@ -84,7 +84,6 @@ const getUserById = async (req, res) => {
     };
 };
 
-const getUserByIdGroup = async (req, res) => {
 
 const getUserByEmail = async (req, res) => {
 
