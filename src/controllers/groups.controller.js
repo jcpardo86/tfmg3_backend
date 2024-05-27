@@ -28,6 +28,8 @@ const getGroupById = async (req, res) => {
 };
 
 const getUsersByGroup = async (req, res) => {
+
+    console.log("ok");
     try {
         const [ users ] = await Grupos.selectUsersByGroup(req.params.id_group);
         res.json(users);

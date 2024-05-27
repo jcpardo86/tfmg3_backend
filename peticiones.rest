@@ -36,7 +36,9 @@ DELETE {{HOST}}/api/groups/15
 
 ###
 GET {{HOST}}/api/users/6
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoxMSwiZXhwIjoxNzE1NzAxMTUxLCJpYXQiOjE3MTU3MDA4NTF9.gw1jSP6riOmj7Qx36ITsSirHZdxfG2FuxdKL-uyPI2A
+
+###
+GET {{HOST}}/api/groups/Allusers/1
 
 ###
 POST {{HOST}}/api/users/register
@@ -60,7 +62,10 @@ Content-Type: application/json
 }
 
 ###
-GET {{HOST}}/api/spents/2
+GET {{HOST}}/api/spents/1
+
+###
+GET {{HOST}}/api/spents/spent/4
 
 ###
 GET {{HOST}}/api/spents/total/1
@@ -77,7 +82,7 @@ Content-Type: application/json
     "idGrupo": 1,
     "descripcion": "regalo",
     "importe": 46,
-    "fecha": "2024-02-18"
+    "fecha": "2024-02-18T06:00:00.000Z"
 }
 
 ###
@@ -85,10 +90,13 @@ PUT {{HOST}}/api/spents/4
 Content-Type: application/json
 
 {
+
     "idGrupo": 1,
     "idUsuario": 1,
     "importe": 46,
-    "descripcion": "regalo",
+    "descripcion": "regalo 2",
     "fecha": "2024-02-18"
 }
 
+###
+DELETE {{HOST}}/api/spents/5

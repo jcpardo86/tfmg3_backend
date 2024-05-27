@@ -15,6 +15,16 @@ const getSpentsByGroup = async (req, res) => {
     };
 };
 
+const getSpentById = async (req, res) => {
+    try {
+        const [ spent ] = await Spents.selectSpentById(req.params.id_spent);
+        res.json(spent[0]); 
+
+    } catch(err) {
+        res.status(500).json({ error: err.message });
+    };
+};
+
 const getSpentsByUser = async (req, res) => {
     try {
         const [ spents ] = await Spents.selectTotalSpentByUser(req.params.id_user);
@@ -36,11 +46,11 @@ const createSpent = async (req, res) => {
 };
 
 const updateSpent =async (req, res, next) => {
-   
+   console.log("update")
     try{
-     const {id_spend} = req.params;
-     const {result} = await  Spents.updateSpent(id_spend, req.body);
-     const [[gasto]] = await Spents.selectSpentById(id_spend);
+     const {id_spent} = req.params;
+     const {result} = await  Spents.updateSpent(id_spent, req.body);
+     const [[gasto]] = await Spents.selectSpentById(id_spent);
   
      res.json(gasto);
       }catch(err){
@@ -49,6 +59,25 @@ const updateSpent =async (req, res, next) => {
           next(err);
       }
   }
+  const deleteSpent = async (req, res, next) => {
+    
+   
+    try{
+
+        const {id_spend}  = req.params;
+        const[result] = await Spents.DeleteSpentById(id_spend);
+        if(result.affectedRows === 1 ){
+            res.json({message: 'Se ha borrado el gasto'});
+
+        }else{
+            res.status(404).json({ message: 'El gasto no existe'});
+        }
+      
+
+    }catch(error){
+        next(error);
+    }
+}
 
 const getTotalSpentByGroup = async (req, res) => {
     try {
@@ -127,5 +156,7 @@ module.exports = {
     getSpentsByUser,
     createSpent,
     getCuentas,
-    updateSpent 
+    updateSpent,
+    deleteSpent,
+    getSpentById
 }

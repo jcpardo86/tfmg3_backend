@@ -29,7 +29,17 @@ const userRegister = async (req, res, next) => {
     }
 
 }; 
+const selectAllUsers = async(req, res, next) =>{
+    try {
+        const [ users ] = await User.selectAllUser(req.params.id_group);
+        res.json(users);
 
+    } catch(err) {
+        res.status(500).json({ error: err.message });
+    };
+
+
+    }
 const userLogin = async (req, res, next) => {
 
     try {
@@ -74,6 +84,7 @@ const getUserById = async (req, res) => {
     };
 };
 
+const getUserByIdGroup = async (req, res) => {
 
 const getUserByEmail = async (req, res) => {
 

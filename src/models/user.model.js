@@ -4,6 +4,10 @@ const selectUserById = (id_user) => {
     return db.query(`select * FROM usuario where idUsuario = ?`, [id_user]); 
 };
 
+const selectAllUser = (id_group) => {
+    return db.query(`select * FROM usuario idGroup = ?`, [id_group]); 
+};
+
 const selectUserByEmail = (email) => {
     return db.query(`SELECT * FROM usuario WHERE email = ?`, [email]);
 };
