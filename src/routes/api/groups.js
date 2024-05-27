@@ -10,7 +10,7 @@ const { checkToken } = require('../../helpers/middlewares');
 // Definición de rutas y handlers
 router.get('/:id_user', getGroupsByUser);
 router.get('/group/:id_group', getGroupById);
-router.get('/Allusers/:id_group', getUsersByGroup); 
+router.get('/users/:id_group', getUsersByGroup); 
 router.post('/', createGroup);
 router.post('/user', addUserToGroup);
 router.put('/:id_group', updateGroup); 
