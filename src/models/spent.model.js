@@ -24,7 +24,7 @@ const DeleteSpentById=(id_spent)=>{
     return db.query('delete from gasto where idGasto = ?', [id_spent]);       
 }
 
-const updateSpent=(id_spend, {idUsuario,importe,descripcion,fecha}) =>{
+const updateSpent=(id_spent, {idUsuario,importe,descripcion,fecha}) =>{
 
    
     return db.query(
@@ -34,7 +34,7 @@ const updateSpent=(id_spend, {idUsuario,importe,descripcion,fecha}) =>{
                 descripcion = ?,
                 fecha = ?
                 where idGasto = ?`,
-                [idUsuario,importe,descripcion,fecha,id_spend]
+                [idUsuario,importe,descripcion,fecha,id_spent]
     )
 }
 

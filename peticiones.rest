@@ -82,7 +82,7 @@ Content-Type: application/json
     "idGrupo": 1,
     "descripcion": "regalo",
     "importe": 46,
-    "fecha": "2024-02-18"
+    "fecha": "2024-02-18T06:00:00.000Z"
 }
 
 ###
@@ -94,7 +94,7 @@ Content-Type: application/json
     "idGrupo": 1,
     "idUsuario": 1,
     "importe": 46,
-    "descripcion": "regalo",
+    "descripcion": "regalo 2",
     "fecha": "2024-02-18"
 }
 

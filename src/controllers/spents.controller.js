@@ -46,11 +46,11 @@ const createSpent = async (req, res) => {
 };
 
 const updateSpent =async (req, res, next) => {
-   
+   console.log("update")
     try{
-     const {id_spend} = req.params;
-     const {result} = await  Spents.updateSpent(id_spend, req.body);
-     const [[gasto]] = await Spents.selectSpentById(id_spend);
+     const {id_spent} = req.params;
+     const {result} = await  Spents.updateSpent(id_spent, req.body);
+     const [[gasto]] = await Spents.selectSpentById(id_spent);
   
      res.json(gasto);
       }catch(err){
