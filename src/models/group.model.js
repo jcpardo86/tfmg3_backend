@@ -20,8 +20,24 @@ const insertUserToGroup = ({idGrupo, idUsuario, porcentaje, rol}) => {
     return db.query(`INSERT INTO grupo_usuario (idGrupo, idUsuario, porcentaje, rol) VALUES (?, ?, ?, ?)`, [idGrupo, idUsuario, porcentaje, rol]);
 };
 
+const updateGroup = ({ idGrupo, nombre, descripcion, imagen }) => {
+    return db.query(`UPDATE grupo SET nombre = ?, descripcion = ?, imagen = ? WHERE idGrupo = ?`, [nombre, descripcion, imagen, idGrupo]);
+};
+
 const deleteGroup = (id_group) => {
     return db.query(`Delete FROM grupo where idGrupo = ?`, [id_group]);
+};
+
+const selectUserGroup = (id_user, id_group) => {
+    return db.query(`SELECT * FROM grupo_usuario WHERE idUsuario = ? AND idGrupo = ?`, [id_user, id_group]);
+};
+
+const updateGroupUser = ({ idGrupo, idUsuario, porcentaje, rol }) => {
+    return db.query(`UPDATE grupo_usuario SET porcentaje = ? WHERE idUsuario = ? AND idGrupo = ?`, [porcentaje, idUsuario, idGrupo]);
+};
+
+const deleteGroupUsers = (id_group) => {
+    return db.query(`DELETE FROM grupo_usuario WHERE idGrupo = ?`, [id_group]);
 };
 
 // Exportación de módulos
@@ -31,5 +47,9 @@ module.exports = {
     selectUsersByGroup,
     insertGroup,
     insertUserToGroup,
-    deleteGroup
+    deleteGroup,
+    selectUserGroup,
+    updateGroup,
+    updateGroupUser,
+    deleteGroupUsers
 };
