@@ -5,6 +5,16 @@ const nodemailer = require('nodemailer');
 
 const mailer= ()=>{
 
+    /*const sendGenericMail = (from, to, subject, text, html=None) => {
+    const message = {
+        from: from,
+        to: to,
+        subject: subject,
+        text: text,
+        html: html | "<p>Enhorabuena! Has creado correctamente tu cuenta en DIVI. Accede al siguiente enlace para Iniciar Sesión: http://localhost:4200/home</p>"
+    };
+}*/
+
     const message = {
         from: "lara.martin.lagares@gmail.com",
         to: "lara.martin.lagares@gmail.com",
