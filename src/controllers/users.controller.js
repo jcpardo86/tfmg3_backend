@@ -84,21 +84,11 @@ const getUserById = async (req, res) => {
     };
 };
 
+const getUserByIdGroup = async (req, res) => {
 
-const getUserByEmail = async (req, res) => {
-
-    try {
-        const [ user ] = await User.selectUserByEmail(req.params.email);
-        
-        if(user.length ===0) {
-            res.json(undefined); 
-        }
-        res.json(user[0]); 
-
-    } catch(err) {
-        res.status(500).json({ error: err.message });
-    };
-};
+    const [ user ] = await User.selectUserById(req.params.id_user);
+    res.json(user); 
+}
 
 
 // Exportación de módulos
@@ -106,5 +96,5 @@ module.exports = {
     userRegister,
     userLogin, 
     getUserById,
-    getUserByEmail
+    selectAllUsers
 }

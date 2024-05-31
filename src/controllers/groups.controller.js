@@ -29,6 +29,7 @@ const getGroupById = async (req, res) => {
 
 const getUsersByGroup = async (req, res) => {
 
+    console.log("ok");
     try {
         const [ users ] = await Grupos.selectUsersByGroup(req.params.id_group);
         res.json(users);
@@ -37,34 +38,8 @@ const getUsersByGroup = async (req, res) => {
     };
 };
 
-const updateGroupUser = async(req, res) => {
-    try {
-        const [ group ] = await Grupos.updateGroupUser(req.body);
-        res.json(group);
-    } catch(err) {
-        res.status(500).json({ error: err.message });
-    };
-};
 
-const deleteGroupUsers = async(req, res) => {
-    try {
-        const [ group ] = await Grupos.deleteGroupUsers(req.params.id_group);
-        res.json(group);
-    } catch(err) {
-        res.status(500).json({ error: err.message });
-    };
-};
-
-const selectUserGroup = async (req, res) => {
-    try {
-        const [ users ] = await Grupos.selectUserGroup(req.params.id_user, req.params.id_group);
-        res.json(users[0]);
-    } catch(err) {
-        res.status(500).json({ error: err.message });
-    };
-};
-
-
+// *****************revisar***************************
 const createGroup = async (req, res) => {
     try {
         const [result] = await Grupos.insertGroup(req.body);
@@ -83,13 +58,10 @@ const addUserToGroup = async (req, res) => {
     };
 };
 
-const updateGroup = async(req, res) => {
-    try {
-        const [ group ] = await Grupos.updateGroup(req.body);
-        res.json(group);
-    } catch(err) {
-        res.status(500).json({ error: err.message });
-    };
+// ****************revisar****************************
+const updateGroup = (req, res) => {
+    const {id_group} = req.params; //destructuring: del objeto req.params quiero extraer el valor de la clave paciente_id y además almacenarlo en una variable llamadad paciente_id
+    res.send(`Actualizamos el grupo ${ id_group }`);
 };
 
 const deleteGroup = async (req, res) => {
@@ -108,11 +80,8 @@ module.exports = {
     getGroupsByUser,
     getGroupById, 
     getUsersByGroup,
-    selectUserGroup,
     createGroup,
     addUserToGroup,
     updateGroup,
-    deleteGroup,
-    updateGroupUser,
-    deleteGroupUsers
+    deleteGroup
 }

@@ -1,7 +1,7 @@
 @PORT = 3000
 @HOST = http://localhost:{{PORT}}
 
-GET {{HOST}}/api/groups/13
+GET {{HOST}}/api/groups/1
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoxMSwiZXhwIjoxNzE1NzA3MTIzLCJpYXQiOjE3MTU3MDY4MjN9.fNFTXAxIsqANtmX-h2tbFLzmQAevUBejC21Q_IaX0o4
 
 ###
@@ -45,9 +45,9 @@ POST {{HOST}}/api/users/register
 Content-Type: application/json
 
 {
-    "nombre": "Laura",
-    "apellidos": "Diaz Fernandez",
-    "email": "laura.diaz@gmail.com",
+    "nombre": "Sonia",
+    "apellidos": "Fernández Cruz",
+    "email": "sonia.fernandez@gmail.com",
     "password": "12345",
     "imagen": "foto_usuario.png"
 }
@@ -57,7 +57,7 @@ POST {{HOST}}/api/users/login
 Content-Type: application/json
 
 {
-    "email": "sonia.fernandez@gmail.com",
+    "email": "Homeromoncada110@gmail.com",
     "password": "12345"
 }
 
