@@ -45,39 +45,36 @@ const createSpent = async (req, res) => {
     };
 };
 
-const updateSpent = async (req, res, next) => {
-
-    const {id_spent} = req.params;
-    
-    try {
-     const {result} = await Spents.updateSpent(id_spent, req.body);
-     const [[spent]] = await Spents.selectSpentById(id_spent);
+const updateSpent =async (req, res, next) => {
+   console.log("update")
+    try{
+     const {id_spent} = req.params;
+     const {result} = await  Spents.updateSpent(id_spent, req.body);
+     const [[gasto]] = await Spents.selectSpentById(id_spent);
   
-     res.json(spent);
-    
-    } catch(err) {
+     res.json(gasto);
+      }catch(err){
 
         console.log(err);
           next(err);
-    }
-}
-
-
-const deleteSpent = async (req, res, next) => {
+      }
+  }
+  const deleteSpent = async (req, res, next) => {
+    
    
-    const {id_spent}  = req.params;
-   
-    try {
-        const[result] = await Spents.deleteSpentById(id_spent);
-        
-        if(result.affectedRows === 1 ) {
-            res.json({ message: 'Se ha borrado el gasto' });
+    try{
 
-        } else {
+        const {id_spend}  = req.params;
+        const[result] = await Spents.DeleteSpentById(id_spend);
+        if(result.affectedRows === 1 ){
+            res.json({message: 'Se ha borrado el gasto'});
+
+        }else{
             res.status(404).json({ message: 'El gasto no existe'});
         }
       
-    } catch(error) {
+
+    }catch(error){
         next(error);
     }
 }
