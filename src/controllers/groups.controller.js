@@ -1,76 +1,75 @@
 
 // Importación de módulo interno
-const Grupos = require('../models/group.model');
+const Group = require('../models/group.model');
 
 
 // Definición de métodos para peticiones sobre grupos
 
-const getGroupsByUser = async (req, res) => {
+const getGroupsByUser = async (req, res, next) => {
     try {
-        const [ groups ] = await Grupos.selectGroupsByUser(req.params.id_user);
+        const [ groups ] = await Group.selectGroupsByUser(req.params.id_user);
         res.json(groups);
-    } catch(err) {
-        res.status(500).json({ error: err.message });
+    } catch(error) {
+        next(error);
     };
 };
 
-const getGroupById = async (req, res) => {
+const getGroupById = async (req, res, next) => {
     try {
-        const [ group ] = await Grupos.selectGroupById(req.params.id_group);
+        const [ group ] = await Group.selectGroupById(req.params.id_group);
 
         if(group.length === 0) {
             return res.status(404).json({ fatal: 'Grupo no encontrado' })
         }
         res.json(group[0]);
-    } catch(err) {
-        res.status(500).json({ error: err.message });
+    } catch(error) {
+        next(error);
     };
 };
 
-const getUsersByGroup = async (req, res) => {
+const getUsersByGroup = async (req, res, next) => {
 
-    console.log("ok");
     try {
-        const [ users ] = await Grupos.selectUsersByGroup(req.params.id_group);
+        const [ users ] = await Group.selectUsersByGroup(req.params.id_group);
         res.json(users);
-    } catch(err) {
-        res.status(500).json({ error: err.message });
+    } catch(error) {
+        next(error);
     };
 };
 
 
 // *****************revisar***************************
-const createGroup = async (req, res) => {
+const createGroup = async (req, res, next) => {
     try {
-        const [result] = await Grupos.insertGroup(req.body);
+        const [result] = await Group.insertGroup(req.body);
         res.json(result);
-    } catch(err) {
-        res.status(500).json({ error: err.message });
+    } catch(error) {
+        next(error);
     };
 };
 
-const addUserToGroup = async (req, res) => {
+const addUserToGroup = async (req, res, next) => {
     try {
-        const [result] = await Grupos.insertUserToGroup(req.body);
+        const [result] = await Group.insertUserToGroup(req.body);
         res.json(result);
-    } catch(err) {
-        res.status(500).json({ error: err.message });
+    } catch(error) {
+        next(error);
     };
 };
 
 // ****************revisar****************************
-const updateGroup = (req, res) => {
+const updateGroup = (req, res, next) => {
     const {id_group} = req.params; //destructuring: del objeto req.params quiero extraer el valor de la clave paciente_id y además almacenarlo en una variable llamadad paciente_id
     res.send(`Actualizamos el grupo ${ id_group }`);
 };
 
-const deleteGroup = async (req, res) => {
+const deleteGroup = async (req, res, next) => {
     const {id_group} = req.params; 
     try {
-        const [ group ] = await Grupos.deleteGroup(id_group);
+        const [ group ] = await Group.deleteGroup(id_group);
         res.json(group);
-    } catch(err) {
-        res.status(500).json({ error: err.message });
+    } catch(error) {
+        next(error);
     };
 };
 

@@ -22,5 +22,11 @@ app.use(cors([
 app.use('/api', require('./routes/api')) // Todas las peticiones que empiecen por /api se gestionarán en el fichero api.js
 
 
+// Middleware error
+app.use((error, req, res, next) => {
+    res.status(500).json({ error: error.message }); 
+    next();
+});
+
 //Exportación de app
 module.exports = app;

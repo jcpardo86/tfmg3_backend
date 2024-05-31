@@ -1,9 +1,11 @@
 @PORT = 3000
 @HOST = http://localhost:{{PORT}}
 
-@TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTczNzIyNzEsImlhdCI6MTcxNzE1NjI3MX0.yqHlSGVYt3xcUDYRr33qdvWX2hgYBJRPY7FYzybUzVs
+@TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTczODQ4MjksImlhdCI6MTcxNzE2ODgyOX0.gta6rE7tR28NfnYaT_S0j7ANEbJnkEEmkKjg5bnPXMc
 
-GET {{HOST}}/api/groups/1
+
+################ GROUPS ####################
+GET {{HOST}}/api/groups/13
 Authorization: {{TOKEN}}
 
 ###
@@ -13,6 +15,7 @@ Authorization: {{TOKEN}}
 ###
 GET {{HOST}}/api/groups/users/2
 Authorization: {{TOKEN}}
+
 
 ###     
 POST {{HOST}}/api/groups/
@@ -30,18 +33,25 @@ Authorization: {{TOKEN}}
 Content-Type: application/json
 
 {
-    "idGrupo": 3,
-    "idUsuario": 18,
+    "idGrupo":26,
+    "idUsuario": 16,
     "porcentaje": 100,
-    "rol": "admin"
+    "rol": "guest"
 }
 
 ###
-DELETE {{HOST}}/api/groups/15
+DELETE {{HOST}}/api/groups/28
+Authorization: {{TOKEN}}
+
+
+################ USERS ####################
+
+###
+GET {{HOST}}/api/users/13
 Authorization: {{TOKEN}}
 
 ###
-GET {{HOST}}/api/users/6
+GET {{HOST}}/api/users/email/lalala@gmail.com
 Authorization: {{TOKEN}}
 
 
@@ -50,9 +60,9 @@ POST {{HOST}}/api/users/register
 Content-Type: application/json
 
 {
-    "nombre": "Claudia",
+    "nombre": "Antonio",
     "apellidos": "Fernández Cruz",
-    "email": "claudia.fernandez@gmail.com",
+    "email": "antonio.fernandez@gmail.com",
     "password": "12345",
     "imagen": "foto_usuario.png"
 }
@@ -66,6 +76,7 @@ Content-Type: application/json
     "password": "12345"
 }
 
+################ SPENTS ####################
 ###
 GET {{HOST}}/api/spents/1
 Authorization: {{TOKEN}}
@@ -96,7 +107,7 @@ Content-Type: application/json
 }
 
 ###
-PUT {{HOST}}/api/spents/51
+PUT {{HOST}}/api/spents/52
 Authorization: {{TOKEN}}
 Content-Type: application/json
 
@@ -109,5 +120,5 @@ Content-Type: application/json
 }
 
 ###
-DELETE {{HOST}}/api/spents/51
+DELETE {{HOST}}/api/spents/50
 Authorization: {{TOKEN}}
