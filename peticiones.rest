@@ -1,18 +1,29 @@
 @PORT = 3000
 @HOST = http://localhost:{{PORT}}
 
+<<<<<<< Updated upstream
 GET {{HOST}}/api/groups/1
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoxMSwiZXhwIjoxNzE1NzA3MTIzLCJpYXQiOjE3MTU3MDY4MjN9.fNFTXAxIsqANtmX-h2tbFLzmQAevUBejC21Q_IaX0o4
+=======
+@TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTczNjUxNjksImlhdCI6MTcxNzE0OTE2OX0.tFlwflktn8jjqkWq-KuFwU2PcClHAxlbJdQSd1z7728
+
+
+############# GROUPS ######################33
+GET {{HOST}}/api/groups/13
+Authorization: {{TOKEN}}
+>>>>>>> Stashed changes
 
 ###
 GET {{HOST}}/api/groups/group/1
+Authorization: {{TOKEN}}
 
 ###
 GET {{HOST}}/api/groups/users/2
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoxMSwiZXhwIjoxNzE1Njk5Mzg3LCJpYXQiOjE3MTU2OTkwODd9.xtirDdja6SeVZKKx-vD5eu2cVfAHRcmayTESV9aMcNs
+Authorization: {{TOKEN}}
 
 ###     
 POST {{HOST}}/api/groups/
+Authorization: {{TOKEN}}
 Content-Type: application/json
 
 {
@@ -22,6 +33,7 @@ Content-Type: application/json
 
 ###
 POST {{HOST}}/api/groups/user
+Authorization: {{TOKEN}}
 Content-Type: application/json
 
 {
@@ -33,12 +45,11 @@ Content-Type: application/json
 
 ###
 DELETE {{HOST}}/api/groups/15
+Authorization: {{TOKEN}}
 
 ###
-GET {{HOST}}/api/users/6
-
-###
-GET {{HOST}}/api/groups/Allusers/1
+GET {{HOST}}/api/users/15
+Authorization: {{TOKEN}}
 
 ###
 POST {{HOST}}/api/users/register
@@ -63,18 +74,23 @@ Content-Type: application/json
 
 ###
 GET {{HOST}}/api/spents/1
+Authorization: {{TOKEN}}
 
 ###
 GET {{HOST}}/api/spents/spent/4
+Authorization: {{TOKEN}}
 
 ###
 GET {{HOST}}/api/spents/total/1
+Authorization: {{TOKEN}}
 
 ###
 GET {{HOST}}/api/spents/saldos/1
+Authorization: {{TOKEN}}
 
 ###
 POST {{HOST}}/api/spents/
+Authorization: {{TOKEN}}
 Content-Type: application/json
 
 {
@@ -82,21 +98,22 @@ Content-Type: application/json
     "idGrupo": 1,
     "descripcion": "regalo",
     "importe": 46,
-    "fecha": "2024-02-18T06:00:00.000Z"
-}
-
-###
-PUT {{HOST}}/api/spents/4
-Content-Type: application/json
-
-{
-
-    "idGrupo": 1,
-    "idUsuario": 1,
-    "importe": 46,
-    "descripcion": "regalo 2",
     "fecha": "2024-02-18"
 }
 
 ###
-DELETE {{HOST}}/api/spents/5
+PUT {{HOST}}/api/spents/4
+Authorization: {{TOKEN}}
+Content-Type: application/json
+
+{
+    "idGrupo": 1,
+    "idUsuario": 13,
+    "importe": 670,
+    "descripcion": "alquiler",
+    "fecha": "2024-02-18"
+}
+
+###
+DELETE {{HOST}}/api/spents/7
+Authorization: {{TOKEN}}

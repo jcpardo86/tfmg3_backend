@@ -4,15 +4,11 @@ const selectUserById = (id_user) => {
     return db.query(`select * FROM usuario where idUsuario = ?`, [id_user]); 
 };
 
-const selectAllUser = (id_group) => {
-    return db.query(`select * FROM usuario idGroup = ?`, [id_group]); 
-};
-
 const selectUserByEmail = (email) => {
     return db.query(`SELECT * FROM usuario WHERE email = ?`, [email]);
 };
 
-const insertUser = ({nombre, apellidos, email, password, imagen}) => {
+const insertUser = ({ nombre, apellidos, email, password, imagen }) => {
     return db.query(`INSERT INTO usuario (nombre, apellidos, email, password, imagen) VALUES (?, ?, ?, ?, ?)`, [nombre, apellidos, email, password, imagen]);
 
 };
