@@ -24,22 +24,12 @@ const userRegister = async (req, res, next) => {
 
         res.json({ success: 'Registro correcto'});
         
-    } catch(err) {
-        next(err);
+    } catch(error) {
+        next(error);
     }
 
 }; 
-const selectAllUsers = async(req, res, next) =>{
-    try {
-        const [ users ] = await User.selectAllUser(req.params.id_group);
-        res.json(users);
 
-    } catch(err) {
-        res.status(500).json({ error: err.message });
-    };
-
-
-    }
 const userLogin = async (req, res, next) => {
 
     try {
@@ -61,34 +51,38 @@ const userLogin = async (req, res, next) => {
         res.json( { success: 'Login correcto', token: createToken(user), id_user: user.idUsuario});
         
 
-    } catch (err) {
-        next(err);
+    } catch (error) {
+        next(error);
     }
 };
 
 
 
-const getUserById = async (req, res) => {
+const getUserById = async (req, res, next) => {
 
     try {
         const [ user ] = await User.selectUserById(req.params.id_user);
         
         if(user.length ===0) {
-            return res.status(404).json({ fatal: 'Usuario no encontrado' });
-           
+            return res.status(404).json({ fatal: 'Usuario no encontrado' });  
         }
         res.json(user[0]); 
 
-    } catch(err) {
-        res.status(500).json({ error: err.message });
+    } catch(error) {
+        next(error);
     };
 };
 
-const getUserByIdGroup = async (req, res) => {
+const getUserByEmail = async (req, res, next) => {
 
-    const [ user ] = await User.selectUserById(req.params.id_user);
-    res.json(user); 
-}
+    try {
+        const [user] = await User.selectUserByEmail(req.params.email);
+        res.json(user[0]); 
+
+    } catch(error) {
+        next(error);
+    };
+};
 
 
 // Exportación de módulos
@@ -96,5 +90,5 @@ module.exports = {
     userRegister,
     userLogin, 
     getUserById,
-    selectAllUsers
+    getUserByEmail
 }

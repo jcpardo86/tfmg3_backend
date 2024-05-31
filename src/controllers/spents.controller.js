@@ -1,91 +1,91 @@
 // Importación de módulos propios
-const Spents = require('../models/spent.model');
-const Groups = require('../models/group.model');
+const Spent = require('../models/spent.model');
+const Group = require('../models/group.model');
 
 
 // Definición de métodos para peticiones sobre gastos
 
-const getSpentsByGroup = async (req, res) => {
+const getSpentsByGroup = async (req, res, next) => {
     try {
-        const [ spents ] = await Spents.selectSpentsByGroup(req.params.id_group);
+        const [ spents ] = await Spent.selectSpentsByGroup(req.params.id_group);
         res.json(spents);
 
-    } catch(err) {
-        res.status(500).json({ error: err.message });
+    } catch(error) {
+        next(error);
     };
 };
 
-const getSpentById = async (req, res) => {
+const getSpentById = async (req, res, next) => {
     try {
-        const [ spent ] = await Spents.selectSpentById(req.params.id_spent);
+        const [ spent ] = await Spent.selectSpentById(req.params.id_spent);
         res.json(spent[0]); 
 
-    } catch(err) {
-        res.status(500).json({ error: err.message });
+    } catch(error) {
+        next(error);
     };
 };
 
-const getSpentsByUser = async (req, res) => {
+const getSpentsByUser = async (req, res, next) => {
     try {
-        const [ spents ] = await Spents.selectTotalSpentByUser(req.params.id_user);
+        const [ spents ] = await Spent.selectTotalSpentByUser(req.params.id_user);
         res.json(spents);
 
-    } catch(err) {
-        res.status(500).json({ error: err.message });
+    } catch(error) {
+        next(error);
     };
 
 };
 
-const createSpent = async (req, res) => {
+const createSpent = async (req, res, next) => {
     try {
-        const [result] = await Spents.insertSpent(req.body);
+        const [result] = await Spent.insertSpent(req.body);
         res.json(result);
-    } catch(err) {
-        res.status(500).json({ error: err.message });
+    } catch(error) {
+        next(error);
     };
 };
 
 const updateSpent =async (req, res, next) => {
-   console.log("update")
-    try{
-     const {id_spent} = req.params;
-     const {result} = await  Spents.updateSpent(id_spent, req.body);
-     const [[gasto]] = await Spents.selectSpentById(id_spent);
-  
-     res.json(gasto);
-      }catch(err){
-
-        console.log(err);
-          next(err);
-      }
-  }
-  const deleteSpent = async (req, res, next) => {
     
+    const {id_spent} = req.params;
+    
+    try {  
+        const {result} = await  Spent.updateSpent(id_spent, req.body);
+        const [[spent]] = await Spent.selectSpentById(id_spent);
+  
+        res.json(spent);
+      
+    } catch(error) {
+        next(error);
+      }
+  };
+
+const deleteSpent = async (req, res, next) => {
+    
+    const {id_spent}  = req.params;
    
-    try{
+    try {
+        const[result] = await Spent.deleteSpentById(id_spent);
 
-        const {id_spend}  = req.params;
-        const[result] = await Spents.DeleteSpentById(id_spend);
-        if(result.affectedRows === 1 ){
-            res.json({message: 'Se ha borrado el gasto'});
+        if(result.affectedRows === 1 ) {
+            res.json(result);
 
-        }else{
-            res.status(404).json({ message: 'El gasto no existe'});
+        } else {
+           res.status(404).json({ message: 'El gasto no existe'});
         }
       
-
-    }catch(error){
+    } catch(error) {
         next(error);
     }
-}
+};
 
-const getTotalSpentByGroup = async (req, res) => {
+const getTotalSpentByGroup = async (req, res, next) => {
     try {
-        const [ totalSpent ] = await Spents.selectTotalSpentByGroup(req.params.id_group);
+        const [ totalSpent ] = await Spent.selectTotalSpentByGroup(req.params.id_group);
         res.json(totalSpent[0]);
 
-    } catch(err) {
-        res.status(500).json({ error: err.message });
+    } catch(error) {
+        next(error);
     };
 };
 
@@ -99,11 +99,11 @@ const getCuentas = async (req, res) => {
     let saldosUsers=[];
     let resultados=[];
 
-    const [ users ] = await Groups.selectUsersByGroup(req.params.id_group);
-    const [ spentGroup ] = await Spents.selectTotalSpentByGroup(req.params.id_group);
+    const [ users ] = await Group.selectUsersByGroup(req.params.id_group);
+    const [ spentGroup ] = await Spent.selectTotalSpentByGroup(req.params.id_group);
 
     for(let user of users) {
-        const [spentUser] = await Spents.selectTotalSpentByUser(user.idUsuario, req.params.id_group);
+        const [spentUser] = await Spent.selectTotalSpentByUser(user.idUsuario, req.params.id_group);
         const saldo = spentUser[0].total_importe - spentGroup[0].total_importe/users.length;
         saldosUsers.push({idUser: user.idUsuario, saldo: saldo});
     }

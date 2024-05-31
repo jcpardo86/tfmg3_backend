@@ -2,16 +2,16 @@
 const router = require('express').Router();
 
 // Importacion de módulos propios - controladores y middleware
-const { getUserById, userRegister, userLogin,selectAllUsers } = require('../../controllers/users.controller');
+const { getUserById, userRegister, userLogin, getUserByEmail } = require('../../controllers/users.controller');
 const { checkToken } = require('../../helpers/middlewares');
 
 
 // Definición de rutas y handlers
-router.get('/:id_user', getUserById);
+router.get('/:id_user', checkToken, getUserById);
+router.get('/email/:email', checkToken, getUserByEmail);
 router.post('/register', userRegister);
 router.post('/login', userLogin);
-router.post('/', selectAllUsers);
-router.get('users/:id_group', getUserById);
+
 
 
 // Exportación de rutas
