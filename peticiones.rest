@@ -122,3 +122,9 @@ Content-Type: application/json
 ###
 DELETE {{HOST}}/api/spents/50
 Authorization: {{TOKEN}}
+
+
+############# MESSAGES ###########
+
+GET {{HOST}}/api/messages/2
+Authorization: {{TOKEN}}

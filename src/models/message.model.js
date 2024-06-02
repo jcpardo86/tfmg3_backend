@@ -5,7 +5,7 @@ const insertMessage = (idUsuario, idGrupo, fecha_hora, texto) => {
 };
 
 const selectMessages = (id_grupo) => {
-    return db.query(`SELECT idUsuario, fecha_hora, texto FROM mensaje WHERE idGrupo = ?`, [id_grupo]);
+    return db.query(`SELECT idMensaje, idUsuario, fecha_hora, texto FROM mensaje WHERE idGrupo = ?`, [id_grupo]);
 
 };
 
