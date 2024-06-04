@@ -5,11 +5,13 @@ const router = require('express').Router();
 const { checkToken } = require('../helpers/middlewares');
 
 // Definición de Rutas
-router.use('/groups', require('./api/groups'));  
+router.use('/groups', checkToken, require('./api/groups'));  
 
 router.use('/users', require('./api/users'));
 
-router.use('/spents', require('./api/spents'));
+router.use('/spents', checkToken, require('./api/spents'));
+
+router.use('/messages', require('./api/messages'));
 
 // Exportación de rutas
 module.exports = router;

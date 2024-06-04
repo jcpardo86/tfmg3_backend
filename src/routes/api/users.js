@@ -7,10 +7,12 @@ const { checkToken } = require('../../helpers/middlewares');
 
 
 // Definición de rutas y handlers
-router.get('/:id_user', getUserById);
+router.get('/:id_user', checkToken, getUserById);
+router.get('/email/:email', checkToken, getUserByEmail);
 router.post('/register', userRegister);
 router.post('/login', userLogin);
-router.get('/email/:email', getUserByEmail);
+
+
 
 // Exportación de rutas
 module.exports = router;
