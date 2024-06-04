@@ -1,14 +1,13 @@
-// Importación de módulo externo y creación de router.
+// const express = require('express');
 const router = require('express').Router();
 
 // Importacion de módulos propios
-const { } = require;
-
+const { requestPasswordReset, resetPassword} = require('../../controllers/reset.controller');
 
 // Ruta para solicitar la recuperación de contraseña
-router.post('forgort-password')
+router.post('/', requestPasswordReset);
 
 // Ruta para restablecer la contraseña
-router.post('reset-password/token')
+router.post('/:token', resetPassword);
 
 module.exports = router;
