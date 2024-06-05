@@ -75,10 +75,6 @@ const forgotPassword = async (req, res, next) => {
 
 
 
-
-
-
-
 const resetPassword = async (req, res, next) => {
 
 	console.log("entra en reset password");
@@ -90,32 +86,80 @@ const resetPassword = async (req, res, next) => {
 	console.log("token", resetToken);
 
 	const user = await resetModel.findUserByResetToken(resetToken);
-	if (!user) {
-			return res.status(404).send('token no válido');
-	}
-
-console.log(user);
-
-	const newPassword = req.body.password;
-	const confirmPassword = req.body.confirmPassword;
-
-
-
-	if (newPassword !== confirmPassword) {
-		return res.status(400).send('Las contraseñas no coinciden');
+	if (user[0].length === 0) {
+		return res.status(404).send('token no válido');
 	} else {
-		console.log("id de usuario  antes de entrar a user new password",user[0][0].idUsuario);
+
+		console.log(user);
+
+		const newPassword = req.body.password;
+		const confirmPassword = req.body.confirmPassword;
 
 
-		const changedPassword = resetModel.userNewPassword(user[0][0].idUsuario, newPassword);
 
-		console.log("usuario con la contrraseña cambiada", user[0][0]);
+		if (newPassword !== confirmPassword) {
+			return res.status(400).send('Las contraseñas no coinciden');
+		} else {
+			console.log("id de usuario  antes de entrar a user new password", user[0][0].idUsuario);
 
-		res.status(200).send('Contraseña actualizada con éxito');
+
+			const changedPassword = resetModel.userNewPassword(user[0][0].idUsuario, newPassword);
+
+			console.log("usuario con la contrraseña cambiada", user[0][0]);
+
+			res.status(200).send('Contraseña actualizada con éxito');
+		}
+
+		console.log(user);
+
+
 	}
-
-	console.log(user);
 }
+
+
+
+
+// const resetPassword = async (req, res, next) => {
+
+// 	console.log("entra en reset password");
+
+// 	console.log(req.params);
+
+// 	const resetToken = req.params.token;
+
+// 	console.log("token", resetToken);
+
+// 	const user = await resetModel.findUserByResetToken(resetToken);
+// 	if (user[0].length === 0) {
+// 		return res.status(404).send('token no válido');
+// 	} else {
+
+// 		console.log(user);
+
+// 		const newPassword = req.body.password;
+// 		const confirmPassword = req.body.confirmPassword;
+
+
+
+// 		if (newPassword !== confirmPassword) {
+// 			return res.status(400).send('Las contraseñas no coinciden');
+// 		} else {
+// 			console.log("id de usuario  antes de entrar a user new password", user[0][0].idUsuario);
+
+
+// 			const changedPassword = resetModel.userNewPassword(user[0][0].idUsuario, newPassword);
+
+// 			console.log("usuario con la contrraseña cambiada", user[0][0]);
+
+// 			res.status(200).send('Contraseña actualizada con éxito');
+// 		}
+
+// 		console.log(user);
+
+
+// 	}
+// }
+
 
 
 

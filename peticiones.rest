@@ -143,11 +143,13 @@ Content-Type: application/json
 
 ###
 
+
 # Restablecer la contraseña usando el token recibido en el correo
-PATCH {{HOST}}/api/reset/3b533b3949fe8b3240b56940c9835501a4adf9339dc8589c3ca3fa76ad51ff1e
+
+PATCH {{HOST}}/api/reset/8d315d135a695a8d72f65d658bf2ff780ca52ceadbfbe30c5cad5afd7f3f6745
 Content-Type: application/json
 
 {
-  "password": "111111",
-  "confirmPassword": "111111"
+  "password": "222222",
+  "confirmPassword": "222222"
 }

@@ -26,10 +26,12 @@ const findUserByResetToken =  (token) => {
 
 const userNewPassword = (idUser, newPassword) => {
 
-	console.log(idUser, newPassword);
+	console.log("entra en userNewPssword", idUser, newPassword);
+
 	const hashedPassword = bcrypt.hashSync(newPassword, 8);
 
 	console.log("password encriptado", hashedPassword);
+
   	return db.query('UPDATE usuario SET password = ?, reset_password_token = NULL WHERE idUsuario = ?', [hashedPassword, idUser]);
 };
 
