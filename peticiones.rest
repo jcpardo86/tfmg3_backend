@@ -144,9 +144,9 @@ Content-Type: application/json
 ###
 
 # Restablecer la contraseña usando el token recibido en el correo
-POST {{HOST}}/api/reset/b2c7f1cef3477d453bb93e8c71d1624bea58576f
+POST {{HOST}}/api/reset/$2a$10$vFreiwrjZt583tWuYQ9/ceP/SW2DNMND0oLvEBvJeWlUOkUURXJEi
 Content-Type: application/json
 
 {
-  "password": "123456"
+  "password": "111111"
 }

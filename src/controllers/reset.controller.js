@@ -1,28 +1,70 @@
 // Importación de módulos propios
 const resetModel = require('../models/reset.model');
+const userModel = require('../models/user.model');
+const tokenUtils = require('../helpers/token_utils');
 const nodeMailer = require('nodemailer');
 const crypto = require('crypto');
 const bcrypt = require('bcryptjs');
+const { log } = require('console');
 
 
 
-
-const requestPasswordReset = async (req, res, next) => {
-  const { email } = req.body;
-  console.log(email);
-
-  try {
-    const user = await resetModel.findUserByEmail(email);
-    if (!user) {
-      return res.status(404).send('No existe usuario con este email');
-    }
-
-    // Generar el token de restablecimiento de contraseña
-    const saltRounds = 10; // Número de rondas de sal para generar el hash
-    const token = await bcrypt.hash(email + Date.now(), saltRounds);
+const forgotPassword = async (req, res, next) => {
+	//buscar usuario por email
+	const { email } = req.body;
+	log("email en forgot password", email);
 
 
-    await resetModel.saveResetToken(email, token);
+	try {
+		log("email en try", email);
+
+		const user = await userModel.selectUserByEmail(email);
+		log("usuario encontrado", user);
+		if (!user) {
+			return res.status(404).send('No existe usuario con este email');
+		}
+
+		//generar random token
+
+	const resetToken = resetModel.generatePasswordToken();
+	console.log("nuevo token creado", resetToken, email);
+
+	const saveToken = await resetModel.saveResetToken(email, resetToken);
+		console.log("usuario con nuevo token password guardado",user);
+
+		res.status(200).send('Token generado con éxito.');
+
+	//¡enviar email con token!
+
+} catch (error) {
+	res.status(500).send('Error al procesar la solicitud.');
+
+}
+
+
+}
+
+const resetPassword = (req, res, next) => {
+}
+
+
+
+// const requestPasswordReset = async (req, res, next) => {
+//   const { email } = req.body;
+//   console.log(email);
+
+//   try {
+//     const user = await resetModel.findUserByEmail(email);
+//     if (!user) {
+//       return res.status(404).send('No existe usuario con este email');
+//     }
+
+//     // Generar el token de restablecimiento de contraseña
+//     const saltRounds = 10; // Número de rondas de sal para generar el hash
+//     const token = await bcrypt.hash(email + Date.now(), saltRounds);
+
+
+//     await resetModel.saveResetToken(email, token);
 
     // const transporter = nodeMailer.createTransport({
     //   service: 'gmail',
@@ -42,32 +84,38 @@ const requestPasswordReset = async (req, res, next) => {
     //   res.status(200).send('Correo enviado.');
     // });
 
-  } catch (error) {
-    res.status(500).send('Error al procesar la solicitud.');
-  }
-};
+//   } catch (error) {
+//     res.status(500).send('Error al procesar la solicitud.');
+//   }
+// };
 
-const resetPassword = async (req, res) => {
-  const { token } = req.params;
-  const { password } = req.body;
+// const resetPassword = async (req, res) => {
+//   const { token } = req.params;
+//   const { password } = req.body;
 
-  try {
-    const user = await resetModel.findUserByToken(token);
-    if (!user || user.reset_password_expires < Date.now()) {
-      return res.status(400).send('El token de recuperación es inválido o ha caducado.');
-    }
+//   try {
+//     const user = await resetModel.findUserByToken(token);
+//     if (!user || user.reset_password_expires < Date.now()) {
+//       return res.status(400).send('El token de recuperación es inválido o ha caducado.');
+//     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-    await resetModel.updatePassword(user.id, hashedPassword);
+//     const hashedPassword = await bcrypt.hash(password, 10);
+//     await resetModel.updatePassword(user.id, hashedPassword);
 
-    res.status(200).send('Contraseña restablecida con éxito.');
-  } catch (error) {
-    res.status(500).send('Error al restablecer la contraseña.');
-  }
-};
+//     res.status(200).send('Contraseña restablecida con éxito.');
+//   } catch (error) {
+//     res.status(500).send('Error al restablecer la contraseña.');
+//   }
+// };
+
+
+// module.exports = {
+// 	requestPasswordReset,
+// 	resetPassword,
+// };
 
 
 module.exports = {
-	requestPasswordReset,
-	resetPassword,
+  forgotPassword,
+  resetPassword,
 };
