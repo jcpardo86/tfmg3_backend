@@ -88,7 +88,7 @@ GET {{HOST}}/api/spents/total/1
 Authorization: {{TOKEN}}
 
 ###
-GET {{HOST}}/api/spents/saldos/1
+GET {{HOST}}/api/spents/saldos/46
 Authorization: {{TOKEN}}
 
 ###
@@ -98,8 +98,8 @@ Content-Type: application/json
 
 {
     "idUsuario": 13,
-    "idGrupo": 2,
-    "descripcion": "factura luz",
+    "idGrupo": 47,
+    "descripcion": "gasto 2.1",
     "importe": 46,
     "fecha": "2024-02-18"
 }
@@ -115,6 +115,16 @@ Content-Type: application/json
     "importe": 85,
     "descripcion": "factura luz",
     "fecha": "2024-02-18"
+}
+
+###
+PUT {{HOST}}/api/spents/
+Authorization: {{TOKEN}}
+Content-Type: application/json
+
+{
+    "idGrupo": 47,
+    "idUsuario": 15
 }
 
 ###
