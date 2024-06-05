@@ -8,6 +8,6 @@ const { resetPassword, forgotPassword} = require('../../controllers/reset.contro
 router.post('/', forgotPassword);
 
 // Ruta para restablecer la contraseña
-router.patch('/:token');
+router.patch('/:token', resetPassword);
 
 module.exports = router;
