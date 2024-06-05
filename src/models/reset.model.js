@@ -4,14 +4,13 @@ const crypto = require('crypto');
 //definición de métodos para resetear password
 
 
-// const findUserByEmail = async (email) => {
-//   const [rows] = await db.query('SELECT * FROM usuario WHERE email = ?', [email]);
-//   return rows[0];
-// };
+const findUserByEmail = (email) => {
+        return db.query(`SELECT * FROM usuario WHERE email = ?`, [email]);
+};
 
 const saveResetToken = async (email, token) => {
   await db.query('UPDATE usuario SET reset_password_token = ? WHERE email = ?', [token, email]);
-  console.log("funcion modelo saveResetToken",email, token);
+//   console.log("funcion modelo saveResetToken",email, token);
 
 };
 
@@ -43,5 +42,6 @@ module.exports = {
   saveResetToken,
   findUserByToken,
 	updatePassword,
-  generatePasswordToken
+	generatePasswordToken,
+  findUserByEmail
 }

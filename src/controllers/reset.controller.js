@@ -1,10 +1,10 @@
 // Importación de módulos propios
+const { sendRecoveryEmail } = require('../helpers/reset_utils');
 const resetModel = require('../models/reset.model');
-const userModel = require('../models/user.model');
-const tokenUtils = require('../helpers/token_utils');
-const nodeMailer = require('nodemailer');
-const crypto = require('crypto');
-const bcrypt = require('bcryptjs');
+// const tokenUtils = require('../helpers/token_utils');
+// const nodeMailer = require('nodemailer');
+// const crypto = require('crypto');
+// const bcrypt = require('bcryptjs');
 const { log } = require('console');
 
 
@@ -12,29 +12,58 @@ const { log } = require('console');
 const forgotPassword = async (req, res, next) => {
 	//buscar usuario por email
 	const { email } = req.body;
-	log("email en forgot password", email);
+	// log("email en forgot password", email);
 
 
 	try {
 		log("email en try", email);
 
-		const user = await userModel.selectUserByEmail(email);
+		const user = await resetModel.findUserByEmail(email);
 		log("usuario encontrado", user);
-		if (!user) {
+
+		if (user[0].length === 0) {
+			console.log("dentro del if");
 			return res.status(404).send('No existe usuario con este email');
 		}
 
 		//generar random token
 
 	const resetToken = resetModel.generatePasswordToken();
-	console.log("nuevo token creado", resetToken, email);
+	// console.log("nuevo token creado", resetToken, email);
 
-	const saveToken = await resetModel.saveResetToken(email, resetToken);
-		console.log("usuario con nuevo token password guardado",user);
+		const savedToken = await resetModel.saveResetToken(email, resetToken);
 
-		res.status(200).send('Token generado con éxito.');
+		const resetUrl = `${req.protocol}://${req.get('host')}/api/reset/${resetToken}`;
 
-	//¡enviar email con token!
+
+		const sendMail = await sendRecoveryEmail(email, resetToken,resetUrl);
+
+
+		// console.log("usuario con nuevo token password guardado",user);
+
+
+		//¡enviar email con token!
+		// const resetUrl = `${req.protocol}://${req.get('host')}/api/reset/${resetToken}`;
+
+
+		// const message = `Has olvidado tu contraseña? Entra en el siguiente enlace para restablecerla: \n\n${resetUrl}\n\nSi no has solicitado este cambio, por favor ignora este mensaje.`;
+		// try {
+		// 	console.log("entra en try de enviar email");
+		// 			await sendRecoveryEmail({
+		// 				subject: 'Recuperación de contraseña',
+		// 				message: message,
+		// 			})
+		// 	log("email enviado");
+
+		// 	res.status(200).send('Token enviado al mail con éxito.');
+
+		// } catch (error) {
+		// // user.password_reset_token = undefined;
+
+		// 	return next(new CustomError('No se ha podido enviar el email', 500));
+
+		// }
+		res.status(200).send('Token enviado al mail con éxito.');
 
 } catch (error) {
 	res.status(500).send('Error al procesar la solicitud.');
