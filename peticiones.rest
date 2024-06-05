@@ -1,9 +1,7 @@
 @PORT = 3000
 @HOST = http://localhost:{{PORT}}
 
-@TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTczODQ4MjksImlhdCI6MTcxNzE2ODgyOX0.gta6rE7tR28NfnYaT_S0j7ANEbJnkEEmkKjg5bnPXMc
-
-
+@TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTc3OTkwNzEsImlhdCI6MTcxNzU4MzA3MX0.ghUaJl7PHevHQBKFlhGZgxVkhitH80jTO6h2lEh0OaQ
 ################ GROUPS ####################
 GET {{HOST}}/api/groups/13
 Authorization: {{TOKEN}}

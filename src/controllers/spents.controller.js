@@ -82,7 +82,7 @@ const deleteSpent = async (req, res, next) => {
 const getTotalSpentByGroup = async (req, res, next) => {
     try {
         const [ totalSpent ] = await Spent.selectTotalSpentByGroup(req.params.id_group);
-        res.json(totalSpent[0]);
+        res.json(parseInt(totalSpent[0].total_importe));
 
     } catch(error) {
         next(error);
