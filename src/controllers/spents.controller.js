@@ -25,7 +25,7 @@ const getSpentById = async (req, res, next) => {
     };
 };
 
-const getSpentsByUser = async (req, res, next) => {
+/*const getSpentsByUser = async (req, res, next) => {
     try {
         const [ spents ] = await Spent.selectTotalSpentByUser(req.params.id_user);
         res.json(spents);
@@ -34,7 +34,7 @@ const getSpentsByUser = async (req, res, next) => {
         next(error);
     };
 
-};
+};*/
 
 const createSpent = async (req, res, next) => {
     try {
@@ -89,6 +89,25 @@ const getTotalSpentByGroup = async (req, res, next) => {
     };
 };
 
+const updateSaldo = async (req, res, next) => {
+    try {
+        const [spentTotalUser] = await Spent.selectTotalSpentByUser(req.body.idUsuario, req.body.idGrupo);
+        if(!spentTotalUser[0].total_importe){
+            spentTotalUser[0].total_importe = 0;
+        }
+        console.log (spentTotalUser);
+        const [[porcentaje]] = await Spent.selectPorcentaje(req.body.idGrupo, req.body.idUsuario);
+        console.log(porcentaje);
+        const [[spentTotalGroup]] = await Spent.selectTotalSpentByGroup(req.body.idGrupo);
+        const saldo = parseInt(spentTotalUser[0].total_importe) - parseInt(spentTotalGroup.total_importe) * parseInt(porcentaje.porcentaje)/100;
+        const resultado = await Spent.updateSaldo(saldo, req.body);
+        res.json(resultado);
+
+    } catch(error) {
+        next(error);
+    }
+};
+
 // ********* Pendiente Optimizar *************
 const getCuentas = async (req, res) => {
     let i = 0;
@@ -100,12 +119,13 @@ const getCuentas = async (req, res) => {
     let resultados=[];
 
     const [ users ] = await Group.selectUsersByGroup(req.params.id_group);
-    const [ spentGroup ] = await Spent.selectTotalSpentByGroup(req.params.id_group);
+    console.log(users);
 
     for(let user of users) {
-        const [spentUser] = await Spent.selectTotalSpentByUser(user.idUsuario, req.params.id_group);
-        const saldo = spentUser[0].total_importe - spentGroup[0].total_importe/users.length;
-        saldosUsers.push({idUser: user.idUsuario, saldo: saldo});
+        //const [spentTotalUser] = await Spent.selectTotalSpentByUser(user.idUsuario, req.params.id_group);
+        const [saldoUser] = await Spent.selectSaldo(req.params.id_group, user.idUsuario);
+        console.log(saldoUser[0].saldo);
+        saldosUsers.push({nameUser: user.nombre, saldo: saldoUser[0].saldo});
     }
 
     for(let i of saldosUsers) {
@@ -114,31 +134,22 @@ const getCuentas = async (req, res) => {
         }else{
             receptor.push(i);
         }
-    }  
-
-    /*pagador.sort(function(a,b){
-        return b.saldo - a.saldo
-    })
-
-    receptor.sort(function(a,b){
-        return a.saldo - b.saldo;
-    })*/
+    } 
 
     while( i !== pagador.length && j !== receptor.length ){
 
-
         if ( pagador[i].saldo + receptor[j].saldo > 0 ){
-            resultados.push(`el usuario ${pagador[i].idUser} debe al usuario ${receptor[j].idUser} la cantidad de ${-pagador[i].saldo}`);
+            resultados.push(`${pagador[i].nameUser} debe a ${receptor[j].nameUser} la cantidad de ${-pagador[i].saldo} €`);
             receptor[j].saldo = pagador[i].saldo + receptor[j].saldo;
             i++;
 
         } else if ( pagador[i].saldo + receptor[j].saldo === 0 ){
-            resultados.push(`el usuario ${pagador[i].idUser} debe al usuario ${receptor[j].idUser} la cantidad de ${receptor[j].saldo}`);
+            resultados.push(`${pagador[i].nameUser} debe a ${receptor[j].nameUser} la cantidad de ${receptor[j].saldo} €`);
             i++;
             j++;
 
         } else {
-            resultados.push(`el usuario ${pagador[i].idUser} debe al usuario ${receptor[j].idUser} la cantidad de ${receptor[j].saldo}`);
+            resultados.push(`${pagador[i].nameUser} debe a ${receptor[j].nameUser} la cantidad de ${receptor[j].saldo} €`);
             pagador[i].saldo = pagador[i].saldo + receptor[j].saldo;
             j++;
         }
@@ -153,10 +164,10 @@ const getCuentas = async (req, res) => {
 module.exports = {
     getSpentsByGroup,
     getTotalSpentByGroup,
-    getSpentsByUser,
     createSpent,
     getCuentas,
     updateSpent,
     deleteSpent,
-    getSpentById
+    getSpentById,
+    updateSaldo
 }
