@@ -33,6 +33,10 @@ const updateSpent = (id_spent, {idUsuario,importe,descripcion,fecha}) => {
     )
 };
 
+const updateDeudaSaldada = (idUsuario, idGrupo) => {
+    return db.query(`UPDATE grupo_usuario SET deuda_saldada = "true" WHERE idGrupo = ? AND idUsuario = ?`, [idGrupo, idUsuario]);
+}
+
 const deleteSpentById = (id_spent) => {
     return db.query('delete from gasto where idGasto = ?', [id_spent]);       
 };
@@ -41,12 +45,24 @@ const updateSaldo = (saldo, {idGrupo, idUsuario}) => {
     return db.query(`UPDATE grupo_usuario SET saldo = ? WHERE idGrupo = ? AND idUsuario = ?`, [saldo, idGrupo, idUsuario]);
 };
 
+const updateLiquidado = (idUsuario, idGrupo, importe) => {
+    return db.query(`UPDATE grupo_usuario SET importe_liquidado = ? WHERE idGrupo = ? AND idUsuario = ?`, [importe, idGrupo, idUsuario]);
+};
+
 const selectPorcentaje = (idGrupo, idUsuario) => {
     return db.query(`SELECT porcentaje FROM grupo_usuario WHERE idGrupo = ? AND idUsuario = ?`, [idGrupo, idUsuario])
 };
 
 const selectSaldo = (idGrupo, idUsuario) => {
     return db.query(`SELECT saldo FROM grupo_usuario WHERE idGrupo = ? AND idUsuario = ?`, [idGrupo, idUsuario])
+};
+
+const selectLiquidado = (idUsuario, idGrupo) => {
+    return db.query(`SELECT importe_liquidado FROM grupo_usuario WHERE idGrupo = ? AND idUsuario = ?`, [idGrupo, idUsuario])
+};
+
+const selectDeudaSaldada = (idUsuario, idGrupo) => {
+    return db.query(`SELECT deuda_saldada FROM grupo_usuario WHERE idGrupo = ? AND idUsuario = ?`, [idGrupo, idUsuario])
 };
 
 // Exportación de módulos
@@ -60,5 +76,9 @@ module.exports = {
     deleteSpentById,
     selectPorcentaje,
     updateSaldo,
-    selectSaldo
+    selectSaldo,
+    updateLiquidado,
+    selectLiquidado,
+    updateDeudaSaldada,
+    selectDeudaSaldada
 };

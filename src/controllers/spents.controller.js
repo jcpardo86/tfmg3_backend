@@ -17,6 +17,7 @@ const getSpentsByGroup = async (req, res, next) => {
 
 const getSpentById = async (req, res, next) => {
     try {
+        console.log(req.body);
         const [ spent ] = await Spent.selectSpentById(req.params.id_spent);
         res.json(spent[0]); 
 
@@ -108,6 +109,37 @@ const updateSaldo = async (req, res, next) => {
     }
 };
 
+const updateImporteLiquidado = async (req, res, next) => {
+    try {
+
+        const [resultado_8] = await Spent.selectDeudaSaldada(req.body.idPagador, req.body.idGrupo);
+        if(resultado_8[0].deuda_saldada === "true") {
+            return res.json({ liquidado: true });
+        }
+
+        const [resultado_1] = await Spent.selectLiquidado(req.body.idPagador, req.body.idGrupo);
+        const liquidadoPagador = resultado_1[0].importe_liquidado + req.body.importe;
+        const [resultado_2] = await Spent.updateLiquidado(req.body.idPagador, req.body.idGrupo, liquidadoPagador);
+        const [resultado_3] = await Spent.selectLiquidado(req.body.idReceptor, req.body.idGrupo)
+        const liquidadoReceptor = resultado_3[0].importe_liquidado - req.body.importe;
+        const [resultado_4] = await Spent.updateLiquidado(req.body.idReceptor, req.body.idGrupo, liquidadoReceptor)
+
+        
+        const [resultado_5] = await Spent.selectSaldo(req.body.idGrupo, req.body.idPagador);
+        const [resultado_6] = await Spent.selectLiquidado(req.body.idPagador, req.body.idGrupo);
+
+        if(resultado_5[0].saldo === -resultado_6[0].importe_liquidado) {
+            const [resultado_7] = await Spent.updateDeudaSaldada(req.body.idPagador, req.body.idGrupo);
+            return res.json({liquidado: true});
+        }
+        return res.json({liquidado: false});
+
+    } catch(error) {
+        next(error);
+    }
+};
+
+
 // ********* Pendiente Optimizar *************
 const getCuentas = async (req, res) => {
     let i = 0;
@@ -124,8 +156,7 @@ const getCuentas = async (req, res) => {
     for(let user of users) {
         //const [spentTotalUser] = await Spent.selectTotalSpentByUser(user.idUsuario, req.params.id_group);
         const [saldoUser] = await Spent.selectSaldo(req.params.id_group, user.idUsuario);
-        console.log(saldoUser[0].saldo);
-        saldosUsers.push({nameUser: user.nombre, saldo: saldoUser[0].saldo});
+        saldosUsers.push({idUser: user.idUsuario, nameUser: user.nombre, saldo: saldoUser[0].saldo});
     }
 
     for(let i of saldosUsers) {
@@ -139,23 +170,27 @@ const getCuentas = async (req, res) => {
     while( i !== pagador.length && j !== receptor.length ){
 
         if ( pagador[i].saldo + receptor[j].saldo > 0 ){
-            resultados.push(`${pagador[i].nameUser} debe a ${receptor[j].nameUser} la cantidad de ${-pagador[i].saldo} €`);
+            resultados.push({idGrupo: req.params.id_group, idPagador: pagador[i].idUser, namePagador: pagador[i].nameUser, idReceptor: receptor[j].idUser, nameReceptor: receptor[j].nameUser, importe: -pagador[i].saldo});
             receptor[j].saldo = pagador[i].saldo + receptor[j].saldo;
             i++;
 
         } else if ( pagador[i].saldo + receptor[j].saldo === 0 ){
-            resultados.push(`${pagador[i].nameUser} debe a ${receptor[j].nameUser} la cantidad de ${receptor[j].saldo} €`);
+            resultados.push({idGrupo: req.params.id_group, idPagador: pagador[i].idUser, namePagador: pagador[i].nameUser, idReceptor: receptor[j].idUser, nameReceptor: receptor[j].nameUser, importe: receptor[j].saldo});
             i++;
             j++;
 
         } else {
-            resultados.push(`${pagador[i].nameUser} debe a ${receptor[j].nameUser} la cantidad de ${receptor[j].saldo} €`);
+            resultados.push({idGrupo: req.params.id_group, idPagador: pagador[i].idUser, namePagador: pagador[i].nameUser, idReceptor: receptor[j].idUser, nameReceptor: receptor[j].nameUser, importe: receptor[j].saldo});
             pagador[i].saldo = pagador[i].saldo + receptor[j].saldo;
             j++;
         }
 
     }
-
+    for(let i = 0; i < resultados.length; i++) {
+        const [liquidado] = await Spent.selectDeudaSaldada(resultados[i].idPagador, resultados[i].idGrupo);
+        resultados[i].liquidado = liquidado[0].deuda_saldada;
+    }
+    console.log(resultados);
     res.json(resultados);
 };
 
@@ -169,5 +204,6 @@ module.exports = {
     updateSpent,
     deleteSpent,
     getSpentById,
-    updateSaldo
+    updateSaldo,
+    updateImporteLiquidado,
 }

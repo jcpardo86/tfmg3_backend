@@ -124,7 +124,18 @@ Content-Type: application/json
 
 {
     "idGrupo": 47,
-    "idUsuario": 15
+    "idUsuario": 15,
+}
+
+###
+PUT {{HOST}}/api/spents/liquidar/46
+Authorization: {{TOKEN}}
+Content-Type: application/json
+
+{
+    "idGrupo": 46,
+    "idPagador": 13,
+    "importe": -9 
 }
 
 ###
