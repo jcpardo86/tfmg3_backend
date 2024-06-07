@@ -12,10 +12,16 @@ const insertUser = ({nombre, apellidos, email, password, imagen}) => {
     return db.query(`INSERT INTO usuario (nombre, apellidos, email, password, imagen) VALUES (?, ?, ?, ?, ?)`, [nombre, apellidos, email, password, imagen]);
 };
 
+const updateById = (id_user, {nombre, apellidos, email, password, imagen}) => {
+
+    return db.query(`UPDATE usuario SET nombre = ?, apellidos = ?, email = ?, password = ?, imagen = ? WHERE idUsuario = ?`, [nombre, apellidos, email, password, imagen, id_user]);
+
+};
 
 // Exportación de módulos
 module.exports = {
     selectUserById,
     selectUserByEmail,
-    insertUser
+    insertUser,
+    updateById
 };
