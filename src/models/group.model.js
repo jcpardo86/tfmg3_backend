@@ -20,6 +20,11 @@ const insertUserToGroup = ({idGrupo, idUsuario, porcentaje, rol}) => {
     return db.query(`INSERT INTO grupo_usuario (idGrupo, idUsuario, porcentaje, rol) VALUES (?, ?, ?, ?)`, [idGrupo, idUsuario, porcentaje, rol]);
 };
 
+const updateStatus = (idGrupo, status) => {
+    return db.query(`UPDATE grupo SET estado = ? WHERE idGrupo = ?`, [status, idGrupo]);
+};
+
+
 const deleteGroup = (id_group) => {
     return db.query(`Delete FROM grupo where idGrupo = ?`, [id_group]);
 };
@@ -31,5 +36,6 @@ module.exports = {
     selectUsersByGroup,
     insertGroup,
     insertUserToGroup,
-    deleteGroup
+    deleteGroup,
+    updateStatus
 };

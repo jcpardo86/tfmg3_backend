@@ -63,6 +63,18 @@ const updateGroup = (req, res, next) => {
     res.send(`Actualizamos el grupo ${ id_group }`);
 };
 
+const updateStatusGroup = async (req, res, next) => {
+    const { id_group } = req.params;
+    try {
+        console.log(req.body);
+        const [ result ] = await Group.updateStatus(id_group, req.body);
+        res.json(result);
+    } catch(error) {
+        next(error);
+    };
+
+}
+
 const deleteGroup = async (req, res, next) => {
     const {id_group} = req.params; 
     try {
@@ -82,5 +94,6 @@ module.exports = {
     createGroup,
     addUserToGroup,
     updateGroup,
-    deleteGroup
+    deleteGroup,
+    updateStatusGroup
 }
