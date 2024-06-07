@@ -1,7 +1,8 @@
 @PORT = 3000
 @HOST = http://localhost:{{PORT}}
 
-@TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTc3OTkwNzEsImlhdCI6MTcxNzU4MzA3MX0.ghUaJl7PHevHQBKFlhGZgxVkhitH80jTO6h2lEh0OaQ
+@TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTc5NzU3NTIsImlhdCI6MTcxNzc1OTc1Mn0.tiGWXS9ZtHC0Yl4Ns5T0w1oMWrpiZup4uYQRR1UIfBw
+
 ################ GROUPS ####################
 GET {{HOST}}/api/groups/13
 Authorization: {{TOKEN}}
@@ -38,6 +39,15 @@ Content-Type: application/json
 }
 
 ###
+PUT {{HOST}}/api/groups/close/47
+Authorization: {{TOKEN}}
+Content-Type: application/json
+
+{
+    "estado": "close"
+}
+
+###
 DELETE {{HOST}}/api/groups/28
 Authorization: {{TOKEN}}
 
@@ -70,8 +80,21 @@ POST {{HOST}}/api/users/login
 Content-Type: application/json
 
 {
-    "email": "lara.martin.lagares@gmail.com",
+    "email": "laura.diaz@gmail.com",
     "password": "12345"
+}
+
+###
+PUT {{HOST}}/api/users/22
+Content-Type: application/json
+Authorization: {{TOKEN}}
+
+{
+    "nombre": "María",
+    "apellidos": "López Martín",
+    "email": "maria.lopez@gmail.com",
+    "password": "12345",
+    "imagen": "foto_usuario.png"
 }
 
 ################ SPENTS ####################

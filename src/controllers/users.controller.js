@@ -84,11 +84,25 @@ const getUserByEmail = async (req, res, next) => {
     };
 };
 
+const updateUserById = async (req, res, next) => {
+
+    try {
+        req.body.password = bcrypt.hashSync(req.body.password, 8); 
+        const [ response ] = await User.updateById(req.params.id_user, req.body);
+        res.json(response);
+
+    } catch (error) {
+        next(error);
+    }
+
+}
+
 
 // Exportación de módulos
 module.exports = {
     userRegister,
     userLogin, 
     getUserById,
-    getUserByEmail
+    getUserByEmail,
+    updateUserById
 }
