@@ -111,11 +111,10 @@ const updateSaldo = async (req, res, next) => {
 
 const updateImporteLiquidado = async (req, res, next) => {
     try {
-
-        const [resultado_8] = await Spent.selectDeudaSaldada(req.body.idPagador, req.body.idGrupo);
-        if(resultado_8[0].deuda_saldada === "true") {
-            return res.json({ liquidado: true });
-        }
+       // const [resultado_8] = await Spent.selectDeudaSaldada(req.body.idPagador, req.body.idGrupo);
+        //if(resultado_8[0].deuda_saldada === "true") {
+           // return res.json({ liquidado: true });
+        //}
 
         const [resultado_1] = await Spent.selectLiquidado(req.body.idPagador, req.body.idGrupo);
         const liquidadoPagador = resultado_1[0].importe_liquidado + req.body.importe;
@@ -128,11 +127,12 @@ const updateImporteLiquidado = async (req, res, next) => {
         const [resultado_5] = await Spent.selectSaldo(req.body.idGrupo, req.body.idPagador);
         const [resultado_6] = await Spent.selectLiquidado(req.body.idPagador, req.body.idGrupo);
 
-        if(resultado_5[0].saldo === -resultado_6[0].importe_liquidado) {
-            const [resultado_7] = await Spent.updateDeudaSaldada(req.body.idPagador, req.body.idGrupo);
-            return res.json({liquidado: true});
-        }
-        return res.json({liquidado: false});
+       // if(resultado_5[0].saldo === -resultado_6[0].importe_liquidado) {
+           // const [resultado_7] = await Spent.updateDeudaSaldada(req.body.idPagador, req.body.idGrupo);
+           // return res.json({liquidado: true});
+        //}
+        return res.json({message: 'registro correcto de importe liquidado'});
+
 
     } catch(error) {
         next(error);
@@ -186,10 +186,11 @@ const getCuentas = async (req, res) => {
         }
 
     }
-    for(let i = 0; i < resultados.length; i++) {
-        const [liquidado] = await Spent.selectDeudaSaldada(resultados[i].idPagador, resultados[i].idGrupo);
-        resultados[i].liquidado = liquidado[0].deuda_saldada;
-    }
+   // for(let i = 0; i < resultados.length; i++) {
+     //   const [liquidado] = await Spent.selectDeudaSaldada(resultados[i].idPagador, resultados[i].idGrupo);
+       // resultados[i].liquidado = liquidado[0].deuda_saldada;
+       // console.log(resultados[i].liquidado);
+    // }
     console.log(resultados);
     res.json(resultados);
 };
