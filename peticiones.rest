@@ -166,6 +166,30 @@ DELETE {{HOST}}/api/spents/50
 Authorization: {{TOKEN}}
 
 
+############# DEBTS ##############
+
+GET {{HOST}}/api/debts/47
+Authorization: {{TOKEN}}
+
+###
+PUT {{HOST}}/api/debts/status
+Authorization: {{TOKEN}}
+Content-Type: application/json
+
+{
+    "idDeuda": 23,
+    "estado": 1
+}
+
+###
+PUT {{HOST}}/api/debts
+Authorization: {{TOKEN}}
+Content-Type: application/json
+
+{
+    "idGrupo": 47
+}
+
 ############# MESSAGES ###########
 
 GET {{HOST}}/api/messages/2
