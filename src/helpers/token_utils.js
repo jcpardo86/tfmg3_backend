@@ -2,6 +2,7 @@
 // Importación de módulos externos
 const dayjs = require('dayjs');
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 
 
 // Definición middleware para generación de token
@@ -17,7 +18,8 @@ const createToken = (user)=> {
 
 }
 
+
 // Exportamos el módulo
 module.exports = {
-    createToken
+	createToken,
 }

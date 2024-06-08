@@ -16,7 +16,7 @@ GET {{HOST}}/api/groups/users/2
 Authorization: {{TOKEN}}
 
 
-###     
+###
 POST {{HOST}}/api/groups/
 Authorization: {{TOKEN}}
 Content-Type: application/json
@@ -59,7 +59,7 @@ GET {{HOST}}/api/users/13
 Authorization: {{TOKEN}}
 
 ###
-GET {{HOST}}/api/users/email/lalala@gmail.com
+GET {{HOST}}/api/users/email/josue.gamonal@gmail.com
 Authorization: {{TOKEN}}
 
 
@@ -68,9 +68,9 @@ POST {{HOST}}/api/users/register
 Content-Type: application/json
 
 {
-    "nombre": "Antonio",
-    "apellidos": "Fernández Cruz",
-    "email": "antonio.fernandez@gmail.com",
+    "nombre": "josue",
+    "apellidos": "Gamonal",
+    "email": "josue.gamonal@gmail.com",
     "password": "12345",
     "imagen": "foto_usuario.png"
 }
@@ -194,3 +194,29 @@ Content-Type: application/json
 
 GET {{HOST}}/api/messages/2
 Authorization: {{TOKEN}}
+
+
+
+############# REST PASSWORD ###########
+
+# Solicitar restablecimiento de contraseña
+POST {{HOST}}/api/reset
+Content-Type: application/json
+
+{
+  "email": "josue.gamonal@gmail.com"
+}
+
+###
+
+
+# Restablecer la contraseña usando el token recibido en el correo
+
+PATCH {{HOST}}/api/reset/b9505218a5f3b9df6e501ef1abd4daaf8426ec1fb7ef38ce8bb1d8200b93
+Content-Type: application/json
+
+{
+  "password": "11111111",
+  "confirmPassword": "11111111"
+}
+# http://localhost:3000/api/reset/b9505218a5f3b9df6e501ef1abd4daaf8426ec1fb7ef38ce8bb1d8200b93
