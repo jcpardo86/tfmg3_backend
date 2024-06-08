@@ -17,5 +17,7 @@ router.use('/messages', require('./api/messages'));
 
 router.use('/reset', require('./api/reset'));
 
+router.use('/upload', require('./api/upload'));
+
 // Exportación de rutas
 module.exports = router;

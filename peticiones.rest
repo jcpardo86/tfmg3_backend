@@ -219,3 +219,16 @@ Content-Type: application/json
   "password": "11111111",
   "confirmPassword": "11111111"
 }
+
+
+############# send image multer ###########
+
+POST {{HOST}}/api/upload/userImage
+
+Content-Type: multipart/form-data
+
+
+{
+	"idUsuario": 6,
+	"imagen": "nombre de la imagen"
+}
