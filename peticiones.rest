@@ -158,7 +158,7 @@ Content-Type: application/json
 {
     "idGrupo": 46,
     "idPagador": 13,
-    "importe": -9 
+    "importe": -9
 }
 
 ###
@@ -219,4 +219,3 @@ Content-Type: application/json
   "password": "11111111",
   "confirmPassword": "11111111"
 }
-# http://localhost:3000/api/reset/b9505218a5f3b9df6e501ef1abd4daaf8426ec1fb7ef38ce8bb1d8200b93
