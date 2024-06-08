@@ -11,7 +11,7 @@ const sendRecoveryEmail = (email, resetToken, resetUrl) => {
     to: email,
     subject: "Recuperación de contraseña",
     text: "Plaintext version of the message",
-    html: `<a href="${resetUrl}">${resetUrl}</a>`
+    html: `<h2>Pincha en el link para recuperar tu contraseña</h2> <br><a href="${resetUrl}">${resetUrl}</a>`
   };
 
   console.log("Message:", message);

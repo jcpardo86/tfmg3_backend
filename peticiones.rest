@@ -146,10 +146,11 @@ Content-Type: application/json
 
 # Restablecer la contraseña usando el token recibido en el correo
 
-PATCH {{HOST}}/api/reset/8d315d135a695a8d72f65d658bf2ff780ca52ceadbfbe30c5cad5afd7f3f6745
+PATCH {{HOST}}/api/reset/b9505218a5f3b9df6e501ef1abd4daaf8426ec1fb7ef38ce8bb1d8200b93
 Content-Type: application/json
 
 {
-  "password": "222222",
-  "confirmPassword": "222222"
+  "password": "11111111",
+  "confirmPassword": "11111111"
 }
+# http://localhost:3000/api/reset/b9505218a5f3b9df6e501ef1abd4daaf8426ec1fb7ef38ce8bb1d8200b93

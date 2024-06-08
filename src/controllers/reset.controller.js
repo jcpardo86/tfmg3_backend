@@ -34,7 +34,8 @@ const forgotPassword = async (req, res, next) => {
 
 		const savedToken = await resetModel.saveResetToken(email, resetToken);
 
-		const resetUrl = `${req.protocol}://${req.get('host')}/api/reset/${resetToken}`;
+		// const resetUrl = `${req.protocol}://${req.get('host')}/api/reset/${resetToken}`;
+		const resetUrl = `${req.protocol}://localhost:4200/reset/${resetToken}`;
 
 
 		const sendMail = await sendRecoveryEmail(email, resetToken,resetUrl);
@@ -64,7 +65,7 @@ const forgotPassword = async (req, res, next) => {
 		// 	return next(new CustomError('No se ha podido enviar el email', 500));
 
 		// }
-		res.status(200).send('Token enviado al mail con éxito.');
+    res.status(200).json({ success: true, message: 'Correo de restablecimiento enviado con éxito' });
 
 } catch (error) {
 		res.status(500).send('Error al procesar la solicitud.');
@@ -107,11 +108,10 @@ const resetPassword = async (req, res, next) => {
 
 			console.log("usuario con la contrraseña cambiada", user[0][0]);
 
-			res.status(200).send('Contraseña actualizada con éxito');
+			// res.status(200).send('Contraseña actualizada con éxito');
 		}
 
-		console.log(user);
-
+    	res.status(200).json({ success: true, message: 'contraseña cambiada con éxito' });
 
 	}
 }
