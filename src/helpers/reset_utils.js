@@ -14,17 +14,29 @@ const sendRecoveryEmail = (email, resetToken, resetUrl) => {
     html: `<h2>Pincha en el link para recuperar tu contraseña</h2> <br><a href="${resetUrl}">${resetUrl}</a>`
   };
 
-  console.log("Message:", message);
+	console.log("Message:", message);
 
-  const transporter = nodemailer.createTransport({
-    host: 'sandbox.smtp.mailtrap.io',
-    port: 2525,
-    secure: false,
-    auth: {
-      user: 'cb8e8ab494f2ec',
-      pass: 'cdfaa1536bb3d3'
-    }
-	  });
+	    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
+        auth: {
+            user: 'lara.martin.lagares@gmail.com',
+            pass: 'xnxk sbnc cdqn ayrp'
+        }
+    });
+
+
+//   const transporter = nodemailer.createTransport({
+//     host: 'sandbox.smtp.mailtrap.io',
+//     port: 2525,
+//     secure: false,
+//     auth: {
+//       user: 'cb8e8ab494f2ec',
+//       pass: 'cdfaa1536bb3d3'
+//     }
+// 	  });
 
 // 	  const transporter = nodemailer.createTransport({
 //     host: process.env.EMAIL_HOST,
