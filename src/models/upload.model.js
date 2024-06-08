@@ -8,9 +8,31 @@ const uploadUserImage = (image, userId) => {
 
 };
 
+const getImageUser = (userId) => {
+
+	return db.query('SELECT imagen FROM usuario WHERE IdUsuario = ?', [userId]);
+
+}
+
+const uploadGroupImage = (image, idGrupo) => {
+
+	console.log("datos en uploadUserImage", idGrupo, image);
+
+   return db.query('UPDATE Grupo SET imagen = ? WHERE idGrupo = ?',[image, idGrupo]);
+
+};
+
+const getGroupImageData = (idGrupo) => {
+
+	return db.query('SELECT imagen FROM Grupo WHERE idGrupo = ?', [idGrupo]);
+
+}
 
 
 module.exports = {
-	uploadUserImage
+	uploadUserImage,
+	getImageUser,
+	uploadGroupImage,
+	getGroupImageData
 
 }

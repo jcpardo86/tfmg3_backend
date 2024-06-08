@@ -232,3 +232,28 @@ Content-Type: multipart/form-data
 	"idUsuario": 6,
 	"imagen": "nombre de la imagen"
 }
+
+
+### imagen de usuario por id de usuario
+
+GET {{HOST}}/api/upload/userimage/6
+
+
+###
+
+{{HOST}}/userimage/imagen-1717868503590-186273915.jpg
+
+# para pedir imagen de usuario en el front hay que usar la url anterior y añadir nombre de la imagen que se obtiene de los datos de usuario de la peticion GET {{HOST}}/api/upload/userImage/6
+
+###
+
+{{HOST}}/groupimage/imagen-1717868503590-186273915.jpg
+
+# para pedir imagen de grupo en el front hay que usar la url anterior y añadir nombre de la imagen que se obtiene de los datos de grupo de la peticion
+
+###imagen de grupo por id de grupo
+
+GET {{HOST}}/api/upload/groupimage/1
+Content-Type: application/json
+
+
