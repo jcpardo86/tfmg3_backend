@@ -24,9 +24,19 @@ app.use('/api', require('./routes/api')) // Todas las peticiones que empiecen po
 
 // Middleware error
 app.use((error, req, res, next) => {
-    res.status(500).json({ error: error.message }); 
+    res.status(500).json({ error: error.message });
     next();
 });
+
+//sirve archivos estáticos desde la carpeta images/user
+const path = require('path');
+
+app.use('/userimage', express.static(path.join(__dirname, 'images', 'user')));
+
+//sirve archivos estáticos desde la carpeta images/groups
+
+app.use('/groupimage', express.static(path.join(__dirname, 'images', 'group')));
+
 
 //Exportación de app
 module.exports = app;
