@@ -29,7 +29,7 @@ exports.uploadImage = async (req, res) => {
     return res.status(400).json('Faltan datos requeridos');
   }
 
-  const image = path.join('/images/user', req.file.filename);
+  const image = path.join('/userimage', req.file.filename);
 
 	const uploadUserImg = await uploadUserImage(image, userId)
 
