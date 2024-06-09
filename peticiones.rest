@@ -232,10 +232,10 @@ POST {{HOST}}/api/upload/userImage
 Content-Type: multipart/form-data
 
 
-{
-	"idUsuario": 6,
-	"imagen": "nombre de la imagen"
-}
+# {
+# 	"idUsuario": 6,
+# 	"imagen": "archivo imagen"
+# }
 
 
 ### imagen de usuario por id de usuario

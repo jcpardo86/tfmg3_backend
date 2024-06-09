@@ -18,7 +18,9 @@ const upload = multer({ storage: storage });
 exports.upload = upload.single('imagen');
 
 exports.uploadImage = async (req, res) => {
-  const userId = req.body.IdUsuario;
+
+	log("req.body", req.body);
+  const userId = req.body.idUsuario;
 
   if (!userId || !req.file) {
     return res.status(400).json('Faltan datos requeridos');
