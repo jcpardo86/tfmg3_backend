@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 
 // Importación de módulos propios
 const User = require('../models/user.model');
-const Mail = require('../helpers/email_utils')
+const Mail = require('../helpers/email_utils');
 const { createToken } = require('../helpers/token_utils');
 
 
@@ -19,8 +19,9 @@ const userRegister = async (req, res, next) => {
         if (result.affectedRows !== 1) {
             return res.status(500).json({ error: 'Registro no correcto'});          
         }
-
-        Mail.mailer();
+        const asunto = "Bienvenido a DIVI";
+        const cuerpo = "<p>Enhorabuena! Has creado correctamente tu cuenta en DIVI. Accede al siguiente enlace para Iniciar Sesión: http://localhost:4200/home</p>";
+        Mail.mailer(req.body.email, asunto, cuerpo);
 
         res.json({ success: 'Registro correcto'});
         

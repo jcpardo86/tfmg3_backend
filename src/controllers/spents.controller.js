@@ -1,6 +1,8 @@
 // Importación de módulos propios
 const Spent = require('../models/spent.model');
 const Group = require('../models/group.model');
+const User = require('../models/user.model');
+const Mail = require('../helpers/email_utils');
 
 
 // Definición de métodos para peticiones sobre gastos
@@ -38,9 +40,24 @@ const getSpentById = async (req, res, next) => {
 };*/
 
 const createSpent = async (req, res, next) => {
+
     try {
         const [result] = await Spent.insertSpent(req.body);
+
+
+        const [spents] = await Spent.selectSpentsByGroup(req.body.idGrupo);
+        let cuerpo = `<p> Un nuevo gasto ha sido añadido a tu grupo ${req.body.idGrupo}. El listado de gastos actualizado es el siguiente: </p>`;
+        for (let spent of spents) {
+            cuerpo = `${cuerpo}\n` + `<p>Gasto: ${spent.idGasto} - Descripcion: ${spent.descripcion} - Importe: ${spent.importe} - Pagador: ${spent.idUsuario}</p>\n`;
+        }
+        const [users] = await Group.selectUsersByGroup(req.body.idGrupo); 
+        const asunto = "DIVI - Nuevo Gasto";
+        for(let user of users) {
+            Mail.mailer(user.email, asunto, cuerpo);
+        }
+        
         res.json(result);
+
     } catch(error) {
         next(error);
     };
