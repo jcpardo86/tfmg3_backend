@@ -19,14 +19,17 @@ exports.upload = upload.single('imagen');
 
 exports.uploadImage = async (req, res) => {
 
-	log("req.body", req.body);
-  const userId = req.body.idUsuario;
+	console.log("req.body.idUsuario", req.body.idUsuario);
+	const userId = req.body.idUsuario;
+
+	console.log("userId", userId);
+
 
   if (!userId || !req.file) {
     return res.status(400).json('Faltan datos requeridos');
   }
 
-  const image = path.join('/images', req.file.filename);
+  const image = path.join('/images/user', req.file.filename);
 
 	const uploadUserImg = await uploadUserImage(image, userId)
 
@@ -35,15 +38,15 @@ exports.uploadImage = async (req, res) => {
 	}
 
     res.json('Imagen subida correctamente');
-
 };
 
 exports.getImage = async (req, res) => {
 
-	console.log("req.params.id_user", req.params.id_user);
+	log("req.params.id_user", req.params.idUsuario)
 
 
   const userId = req.params.id_user;
+	console.log("req.params.id_user", req.params.idUsuario);
 
   if (!userId) {
 	return res.status(400).json('Faltan datos requeridos');

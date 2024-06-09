@@ -36,7 +36,10 @@ exports.uploadImage = async (req, res) => {
 };
 
 exports.getGroupImage = async (req, res) => {
+
+	console.log("req.params.id_group", req.params.id_group);
 	const groupId = req.params.id_group;
+	console.log("groupId", groupId);
 
 	console.log(groupId);
 

@@ -227,13 +227,13 @@ Content-Type: application/json
 
 ############# send image multer ###########
 
-POST {{HOST}}/api/upload/userImage
+POST {{HOST}}/api/upload/userimage
 
 Content-Type: multipart/form-data
 
 
 # {
-# 	"idUsuario": 6,
+# 	"id_user": 6,
 # 	"imagen": "archivo imagen"
 # }
 
