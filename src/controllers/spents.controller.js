@@ -100,7 +100,8 @@ const updateSaldo = async (req, res, next) => {
         const [[porcentaje]] = await Spent.selectPorcentaje(req.body.idGrupo, req.body.idUsuario);
         console.log(porcentaje);
         const [[spentTotalGroup]] = await Spent.selectTotalSpentByGroup(req.body.idGrupo);
-        const saldo = parseInt(spentTotalUser[0].total_importe) - parseInt(spentTotalGroup.total_importe) * parseInt(porcentaje.porcentaje)/100;
+        const [liquidado] = await Spent.selectLiquidado(req.body.idUsuario, req.body.idGrupo);
+        const saldo = parseInt(spentTotalUser[0].total_importe) - parseInt(spentTotalGroup.total_importe) * parseInt(porcentaje.porcentaje)/100 + liquidado[0].importe_liquidado;
         const resultado = await Spent.updateSaldo(saldo, req.body);
         res.json(resultado);
 
@@ -116,16 +117,12 @@ const updateImporteLiquidado = async (req, res, next) => {
            // return res.json({ liquidado: true });
         //}
 
-        const [resultado_1] = await Spent.selectLiquidado(req.body.idPagador, req.body.idGrupo);
+        const [resultado_1] = await Spent.selectLiquidado(req.body.idUsuario, req.body.idGrupo);
         const liquidadoPagador = resultado_1[0].importe_liquidado + req.body.importe;
-        const [resultado_2] = await Spent.updateLiquidado(req.body.idPagador, req.body.idGrupo, liquidadoPagador);
-        const [resultado_3] = await Spent.selectLiquidado(req.body.idReceptor, req.body.idGrupo)
+        const [resultado_2] = await Spent.updateLiquidado(req.body.idUsuario, req.body.idGrupo, liquidadoPagador);
+        const [resultado_3] = await Spent.selectLiquidado(req.body.receptor, req.body.idGrupo)
         const liquidadoReceptor = resultado_3[0].importe_liquidado - req.body.importe;
-        const [resultado_4] = await Spent.updateLiquidado(req.body.idReceptor, req.body.idGrupo, liquidadoReceptor)
-
-        
-        const [resultado_5] = await Spent.selectSaldo(req.body.idGrupo, req.body.idPagador);
-        const [resultado_6] = await Spent.selectLiquidado(req.body.idPagador, req.body.idGrupo);
+        const [resultado_4] = await Spent.updateLiquidado(req.body.receptor, req.body.idGrupo, liquidadoReceptor)
 
        // if(resultado_5[0].saldo === -resultado_6[0].importe_liquidado) {
            // const [resultado_7] = await Spent.updateDeudaSaldada(req.body.idPagador, req.body.idGrupo);

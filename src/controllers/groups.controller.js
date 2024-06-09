@@ -37,6 +37,15 @@ const getUsersByGroup = async (req, res, next) => {
     };
 };
 
+const getStatus = async (req, res, next) => {
+
+    try {
+        const [ status ] = await Group.selectStatus(req.params.id_group);
+        res.json(status[0].estado);
+    } catch(error) {
+        next(error);
+    };
+};
 
 // *****************revisar***************************
 const createGroup = async (req, res, next) => {
@@ -67,7 +76,7 @@ const updateStatusGroup = async (req, res, next) => {
     const { id_group } = req.params;
     try {
         console.log(req.body);
-        const [ result ] = await Group.updateStatus(id_group, req.body);
+        const [ result ] = await Group.updateStatus(parseInt(id_group), req.body.status);
         res.json(result);
     } catch(error) {
         next(error);
@@ -95,5 +104,6 @@ module.exports = {
     addUserToGroup,
     updateGroup,
     deleteGroup,
-    updateStatusGroup
+    updateStatusGroup,
+    getStatus
 }

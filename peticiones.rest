@@ -15,6 +15,10 @@ Authorization: {{TOKEN}}
 GET {{HOST}}/api/groups/users/2
 Authorization: {{TOKEN}}
 
+###
+GET {{HOST}}/api/groups/status/48
+Authorization: {{TOKEN}}
+
 
 ###
 POST {{HOST}}/api/groups/
