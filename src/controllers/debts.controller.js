@@ -49,19 +49,13 @@ const updateDebtsByGroup = async (req, res, next) => {
             pagador[i].saldo = pagador[i].saldo + receptor[j].saldo;
             j++;
         }
-
     }
-   // for(let i = 0; i < resultados.length; i++) {
-     //   const [liquidado] = await Spent.selectDeudaSaldada(resultados[i].idPagador, resultados[i].idGrupo);
-       // resultados[i].liquidado = liquidado[0].deuda_saldada;
-       // console.log(resultados[i].liquidado);
-    // }
     
 
     const arrIdUpdated = [];
     for(let resultado of resultados) {
         const [id_debt] = await Debt.selectDebt(req.body.idGrupo, resultado.idPagador, resultado.idReceptor);
-        if (id_debt.length>0) {
+        if (id_debt.length>0 && id_debt[0].is_pagada!==1) {
            const  update = await Debt.updateDebtById(id_debt[0].idDeuda, resultado.importe);
             arrIdUpdated.push(id_debt[0].idDeuda);
         }

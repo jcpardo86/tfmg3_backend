@@ -12,6 +12,10 @@ const selectUsersByGroup = (id_group) => {
     return db.query(`select * FROM usuario where idUsuario IN (select idUsuario FROM grupo_usuario where idGrupo = ?)`, [id_group]);
 };
 
+const selectStatus = (id_group) => {
+    return db.query(`select estado FROM grupo where idGrupo = ?`, [id_group]);
+};
+
 const insertGroup = ({nombre, descripcion}) => {
     return db.query(`INSERT INTO grupo (nombre, descripcion) VALUES (?, ?)`, [nombre, descripcion]);
 };
@@ -37,5 +41,6 @@ module.exports = {
     insertGroup,
     insertUserToGroup,
     deleteGroup,
-    updateStatus
+    updateStatus,
+    selectStatus
 };
