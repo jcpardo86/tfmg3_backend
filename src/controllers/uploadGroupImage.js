@@ -23,7 +23,7 @@ exports.uploadImage = async (req, res) => {
     return res.status(400).json('Faltan datos requeridos');
   }
 
-  const image = path.join('/images', req.file.filename);
+  const image = path.join('/groupimage', req.file.filename);
 
 	const uploadGroupImg = await uploadGroupImage(image, idGrupo)
 
