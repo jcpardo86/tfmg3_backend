@@ -31,6 +31,8 @@ const updateDebtsByGroup = async (req, res, next) => {
             receptor.push(i);
         }
     } 
+    console.log ('pagador', pagador);
+    console.log('recpetor', receptor);
 
     while( i !== pagador.length && j !== receptor.length ){
 
@@ -50,6 +52,7 @@ const updateDebtsByGroup = async (req, res, next) => {
             j++;
         }
     }
+    console.log(resultados);
     
 
     const arrIdUpdated = [];
@@ -61,11 +64,14 @@ const updateDebtsByGroup = async (req, res, next) => {
         }
     }
 
+    console.log("arrUpdate", arrIdUpdated);
+
     const [debts] = await Debt.selectDebtsByGroup(req.body.idGrupo);
     for(let i = 0; i<debts.length; i++) {
-        let borrar = 0; 
+        let borrar = 1; 
         for(let id of arrIdUpdated) {
-            if (debts[i].idDeuda !== id) {
+            if (debts[i].idDeuda !== id && debts[i].is_pagada !== 1) {
+                console.log ("estoy aquí", debts[i].idDeuda)
                 borrar = 1; 
             } else {
                 borrar = 0; 
@@ -79,11 +85,11 @@ const updateDebtsByGroup = async (req, res, next) => {
 
     for(let resultado of resultados) {
         const [id_debt] = await Debt.selectDebt(req.body.idGrupo, resultado.idPagador, resultado.idReceptor);
-        if (id_debt.length===0) {
+        console.log("id_debt", id_debt);
+        if (id_debt.length===0 || id_debt[0].is_pagada ===1) {
          await Debt.insertDebt(resultado);
         }
     }
-
     res.json(resultados);
 };
 

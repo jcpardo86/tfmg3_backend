@@ -1,7 +1,7 @@
 @PORT = 3000
 @HOST = http://localhost:{{PORT}}
 
-@TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTc5NzU3NTIsImlhdCI6MTcxNzc1OTc1Mn0.tiGWXS9ZtHC0Yl4Ns5T0w1oMWrpiZup4uYQRR1UIfBw
+@TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTgyMzA1ODgsImlhdCI6MTcxODAxNDU4OH0.emgdgrZAhJ37jo5fylxYjncGTC08-BDraqvsYyvJnyk
 
 ################ GROUPS ####################
 GET {{HOST}}/api/groups/13
@@ -84,8 +84,8 @@ POST {{HOST}}/api/users/login
 Content-Type: application/json
 
 {
-    "email": "laura.diaz@gmail.com",
-    "password": "12345"
+    "email": "lara.martin.lagares@gmail.com",
+    "password": "123456"
 }
 
 ###
@@ -166,7 +166,7 @@ Content-Type: application/json
 }
 
 ###
-DELETE {{HOST}}/api/spents/50
+DELETE {{HOST}}/api/spents/209
 Authorization: {{TOKEN}}
 
 

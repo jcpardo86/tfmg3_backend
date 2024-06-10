@@ -52,9 +52,10 @@ const createSpent = async (req, res, next) => {
         }
         const [users] = await Group.selectUsersByGroup(req.body.idGrupo); 
         const asunto = "DIVI - Nuevo Gasto";
-        for(let user of users) {
-            Mail.mailer(user.email, asunto, cuerpo);
-        }
+        //for(let user of users) {
+           //Mail.mailer(user.email, asunto, cuerpo);
+           Mail.mailer("lara.martin.lagares@gmail.com", asunto, cuerpo);
+        //}
         
         res.json(result);
 
@@ -81,9 +82,13 @@ const updateSpent =async (req, res, next) => {
 const deleteSpent = async (req, res, next) => {
     
     const {id_spent}  = req.params;
+
+    console.log(id_spent);
    
     try {
+        console.log('Estoy en delete')
         const[result] = await Spent.deleteSpentById(id_spent);
+        console.log(result);
 
         if(result.affectedRows === 1 ) {
             res.json(result);
@@ -110,16 +115,20 @@ const getTotalSpentByGroup = async (req, res, next) => {
 const updateSaldo = async (req, res, next) => {
     try {
         const [spentTotalUser] = await Spent.selectTotalSpentByUser(req.body.idUsuario, req.body.idGrupo);
-        if(!spentTotalUser[0].total_importe){
-            spentTotalUser[0].total_importe = 0;
+        console.log("gasto total por usuario", spentTotalUser);
+       if(!spentTotalUser[0].total_importe){
+         spentTotalUser[0].total_importe = 0;
         }
-        console.log (spentTotalUser);
         const [[porcentaje]] = await Spent.selectPorcentaje(req.body.idGrupo, req.body.idUsuario);
-        console.log(porcentaje);
         const [[spentTotalGroup]] = await Spent.selectTotalSpentByGroup(req.body.idGrupo);
+        console.log(spentTotalGroup); 
+       // if(!spentTotalGroup.total_importe){
+       //     spentTotalGroup.total_importe = 0;
+       // }
         const [liquidado] = await Spent.selectLiquidado(req.body.idUsuario, req.body.idGrupo);
         const saldo = parseInt(spentTotalUser[0].total_importe) - parseInt(spentTotalGroup.total_importe) * parseInt(porcentaje.porcentaje)/100 + liquidado[0].importe_liquidado;
         const resultado = await Spent.updateSaldo(saldo, req.body);
+        console.log('saldo actualizado', resultado);
         res.json(resultado);
 
     } catch(error) {
