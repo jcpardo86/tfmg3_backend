@@ -47,6 +47,24 @@ const getStatus = async (req, res, next) => {
     };
 };
 
+const getImageGroup = async (req, res, next) => {
+    
+      const id_group = req.params.id_group;
+    
+      if (!id_group) {
+        return res.status(400).json('Faltan datos requeridos');
+      }
+    
+      const [image] = await Group.selectImageGroup(id_group);
+    
+      if (!image) {
+        return res.status(404).json('Imagen no encontrada');
+      }
+    
+      res.json(image);
+    
+};  
+
 // *****************revisar***************************
 const createGroup = async (req, res, next) => {
     try {
@@ -100,6 +118,7 @@ module.exports = {
     getGroupsByUser,
     getGroupById, 
     getUsersByGroup,
+    getImageGroup,
     createGroup,
     addUserToGroup,
     updateGroup,

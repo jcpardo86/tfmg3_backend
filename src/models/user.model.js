@@ -8,13 +8,18 @@ const selectUserByEmail = (email) => {
     return db.query(`SELECT * FROM usuario WHERE email = ?`, [email]);
 };
 
-const insertUser = ({nombre, apellidos, email, password, imagen}) => {
-    return db.query(`INSERT INTO usuario (nombre, apellidos, email, password, imagen) VALUES (?, ?, ?, ?, ?)`, [nombre, apellidos, email, password, imagen]);
+//LARA - Añado esta consulta para obtener el nombre del archivo de imagen del usuario
+const selectImageUser = (id_user) => {
+	return db.query('SELECT imagen FROM usuario WHERE IdUsuario = ?', [id_user]);
 };
 
-const updateById = (id_user, {nombre, apellidos, email, password, imagen}) => {
+const insertUser = ( {nombre, apellidos, email, password} ) => {
+    return db.query(`INSERT INTO usuario (nombre, apellidos, email, password) VALUES (?, ?, ?, ?)`, [nombre, apellidos, email, password]);
+};
 
-    return db.query(`UPDATE usuario SET nombre = ?, apellidos = ?, email = ?, password = ?, imagen = ? WHERE idUsuario = ?`, [nombre, apellidos, email, password, imagen, id_user]);
+const updateById = (id_user, {nombre, apellidos, email, password}) => {
+
+    return db.query(`UPDATE usuario SET nombre = ?, apellidos = ?, email = ?, password = ? WHERE idUsuario = ?`, [nombre, apellidos, email, password, id_user]);
 
 };
 
@@ -22,6 +27,7 @@ const updateById = (id_user, {nombre, apellidos, email, password, imagen}) => {
 module.exports = {
     selectUserById,
     selectUserByEmail,
+    selectImageUser,
     insertUser,
     updateById
 };
