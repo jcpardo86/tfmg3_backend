@@ -1,6 +1,7 @@
 // Importación de librerías externas
 const express = require('express');
 const cors = require('cors');
+//const path = require('path');
 
 
 // Creación de la APP Express
@@ -18,9 +19,9 @@ app.use(cors([
     }
 ]));
 
+
 // Rutas
 app.use('/api', require('./routes/api')) // Todas las peticiones que empiecen por /api se gestionarán en el fichero api.js
-
 
 // Middleware error
 app.use((error, req, res, next) => {
@@ -30,8 +31,8 @@ app.use((error, req, res, next) => {
 
 //sirve archivos estáticos desde la carpeta images/user
 const path = require('path');
-
 app.use('/userimage', express.static(path.join(__dirname, 'images', 'user')));
+
 
 //sirve archivos estáticos desde la carpeta images/groups
 

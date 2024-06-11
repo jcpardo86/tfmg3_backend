@@ -5,8 +5,8 @@ const insertMessage = (idUsuario, idGrupo, fecha_hora, texto) => {
 };
 
 const selectMessages = (id_grupo) => {
-    return db.query(`SELECT idMensaje, idUsuario, fecha_hora, texto FROM mensaje WHERE idGrupo = ?`, [id_grupo]);
-
+    //return db.query(`SELECT idMensaje, idUsuario, fecha_hora, texto FROM mensaje WHERE idGrupo = ?`, [id_grupo]);
+    return db.query(`SELECT idMensaje, idUsuario, fecha_hora, texto FROM mensaje WHERE idGrupo = ? ORDER BY idMensaje DESC LIMIT 5`, [id_grupo] )
 };
 
 // Exportación de módulos

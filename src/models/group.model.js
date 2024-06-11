@@ -16,6 +16,10 @@ const selectStatus = (id_group) => {
     return db.query(`select estado FROM grupo where idGrupo = ?`, [id_group]);
 };
 
+const selectImageGroup = (idGrupo) => {
+	return db.query('SELECT imagen FROM Grupo WHERE idGrupo = ?', [idGrupo]);
+};
+
 const insertGroup = ({nombre, descripcion}) => {
     return db.query(`INSERT INTO grupo (nombre, descripcion) VALUES (?, ?)`, [nombre, descripcion]);
 };
@@ -38,6 +42,7 @@ module.exports = {
     selectGroupsByUser,
     selectGroupById,
     selectUsersByGroup,
+    selectImageGroup,
     insertGroup,
     insertUserToGroup,
     deleteGroup,

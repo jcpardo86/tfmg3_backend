@@ -1,11 +1,11 @@
 // Importación de módulo externo
 const bcrypt = require('bcryptjs');
+const { log } = require('console');
 
 // Importación de módulos propios
 const User = require('../models/user.model');
 const Mail = require('../helpers/email_utils');
 const { createToken } = require('../helpers/token_utils');
-
 
 
 // Definición de métodos para peticiones sobre usuarios
@@ -85,6 +85,28 @@ const getUserByEmail = async (req, res, next) => {
     };
 };
 
+const getImageUser = async (req, res) => {
+
+	log("req.params.id_user", req.params.idUsuario)
+
+
+  const userId = req.params.id_user;
+	console.log("req.params.id_user", req.params.idUsuario);
+
+  if (!userId) {
+	return res.status(400).json('Faltan datos requeridos');
+  }
+
+  const [image] = await User.selectImageUser(userId);
+
+  if (!image) {
+	return res.status(404).json('Imagen no encontrada');
+  }
+
+  res.json(image);
+
+};
+
 const updateUserById = async (req, res, next) => {
 
     try {
@@ -105,5 +127,6 @@ module.exports = {
     userLogin, 
     getUserById,
     getUserByEmail,
+    getImageUser,
     updateUserById
 }

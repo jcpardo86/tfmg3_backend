@@ -19,6 +19,9 @@ Authorization: {{TOKEN}}
 GET {{HOST}}/api/groups/status/48
 Authorization: {{TOKEN}}
 
+###
+GET {{HOST}}/api/groups/groupimage/54
+Authorization: {{TOKEN}}
 
 ###
 POST {{HOST}}/api/groups/
@@ -63,20 +66,21 @@ GET {{HOST}}/api/users/13
 Authorization: {{TOKEN}}
 
 ###
-GET {{HOST}}/api/users/email/josue.gamonal@gmail.com
+GET {{HOST}}/api/users/email/alberto.perez@gmail.com
 Authorization: {{TOKEN}}
 
+###
+GET {{HOST}}/api/users/userimage/15
 
 ###
 POST {{HOST}}/api/users/register
 Content-Type: application/json
 
 {
-    "nombre": "josue",
-    "apellidos": "Gamonal",
-    "email": "josue.gamonal@gmail.com",
-    "password": "12345",
-    "imagen": "foto_usuario.png"
+    "nombre": "Paloma",
+    "apellidos": "Angulo",
+    "email": "paloma.angulo@gmail.com",
+    "password": "12345"
 }
 
 ###
@@ -84,7 +88,7 @@ POST {{HOST}}/api/users/login
 Content-Type: application/json
 
 {
-    "email": "lara.martin.lagares@gmail.com",
+    "email": "ananunezrejon@gmail.com",
     "password": "123456"
 }
 
@@ -97,8 +101,7 @@ Authorization: {{TOKEN}}
     "nombre": "María",
     "apellidos": "López Martín",
     "email": "maria.lopez@gmail.com",
-    "password": "12345",
-    "imagen": "foto_usuario.png"
+    "password": "12345"   
 }
 
 ################ SPENTS ####################
@@ -211,11 +214,8 @@ Content-Type: application/json
   "email": "josue.gamonal@gmail.com"
 }
 
-###
-
-
 # Restablecer la contraseña usando el token recibido en el correo
-
+###
 PATCH {{HOST}}/api/reset/b9505218a5f3b9df6e501ef1abd4daaf8426ec1fb7ef38ce8bb1d8200b93
 Content-Type: application/json
 
@@ -225,12 +225,10 @@ Content-Type: application/json
 }
 
 
-############# send image multer ###########
+############# UPLOAD IMAGES (multer) ###########
 
 POST {{HOST}}/api/upload/userimage
-
 Content-Type: multipart/form-data
-
 
 # {
 # 	"id_user": 6,
@@ -238,26 +236,14 @@ Content-Type: multipart/form-data
 # }
 
 
-### imagen de usuario por id de usuario
-
-GET {{HOST}}/api/upload/userimage/6
-
 
 ###
 
-{{HOST}}/userimage/imagen-1717868503590-186273915.jpg
-
+{{HOST}}/userimage/default.jpg
 # para pedir imagen de usuario en el front hay que usar la url anterior y añadir nombre de la imagen que se obtiene de los datos de usuario de la peticion GET {{HOST}}/api/upload/userImage/6
 
 ###
-
-{{HOST}}/groupimage/imagen-1717868503590-186273915.jpg
-
-# para pedir imagen de grupo en el front hay que usar la url anterior y añadir nombre de la imagen que se obtiene de los datos de grupo de la peticion
-
-###imagen de grupo por id de grupo
-
-GET {{HOST}}/api/upload/groupimage/1
-Content-Type: application/json
+{{HOST}}/groupimage/default.jpg
+#para pedir imagen de grupo en el front hay que usar la url anterior y añadir nombre de la imagen que se obtiene de los datos de grupo de la peticion GET {{HOST}}/api/upload/groupImage/6
 
 
