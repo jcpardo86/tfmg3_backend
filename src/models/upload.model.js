@@ -10,7 +10,7 @@ const uploadUserImage = (image, userId) => {
 };*/
 
 const uploadGroupImage = (image, idGrupo) => {
-   return db.query('UPDATE Grupo SET imagen = ? WHERE idGrupo = ?',[image, idGrupo]);
+   return db.query('UPDATE grupo SET imagen = ? WHERE idGrupo = ?',[image, idGrupo]);
 };
 
 // Me llevo esta consulta al fichero group.model.js

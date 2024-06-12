@@ -65,6 +65,16 @@ const getImageGroup = async (req, res, next) => {
     
 };  
 
+const getUserGroup = async (req, res, next) => {
+    try {
+        const [ groups ] = await Group.getUserGroup(req.params.id_user, req.params.id_group);
+        console.log(groups)
+        res.json(groups);
+    } catch(error) {
+        next(error);
+    };
+};
+
 // *****************revisar***************************
 const createGroup = async (req, res, next) => {
     try {
@@ -84,11 +94,15 @@ const addUserToGroup = async (req, res, next) => {
     };
 };
 
-// ****************revisar****************************
-const updateGroup = (req, res, next) => {
-    const {id_group} = req.params; //destructuring: del objeto req.params quiero extraer el valor de la clave paciente_id y además almacenarlo en una variable llamadad paciente_id
-    res.send(`Actualizamos el grupo ${ id_group }`);
+const updateGroup = async(req, res) => {
+    try {
+        const [ group ] = await Group.updateGroup(req.body);
+        res.json(group);
+    } catch(err) {
+        res.status(500).json({ error: err.message });
+    };
 };
+
 
 const updateStatusGroup = async (req, res, next) => {
     const { id_group } = req.params;
@@ -124,5 +138,6 @@ module.exports = {
     updateGroup,
     deleteGroup,
     updateStatusGroup,
-    getStatus
+    getStatus,
+    getUserGroup,
 }

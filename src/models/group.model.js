@@ -17,7 +17,7 @@ const selectStatus = (id_group) => {
 };
 
 const selectImageGroup = (idGrupo) => {
-	return db.query('SELECT imagen FROM Grupo WHERE idGrupo = ?', [idGrupo]);
+	return db.query('SELECT imagen FROM grupo WHERE idGrupo = ?', [idGrupo]);
 };
 
 const insertGroup = ({nombre, descripcion}) => {
@@ -37,6 +37,16 @@ const deleteGroup = (id_group) => {
     return db.query(`Delete FROM grupo where idGrupo = ?`, [id_group]);
 };
 
+const getUserGroup = (id_user, id_group) => {
+    return db.query(`select * FROM grupo_usuario where idUsuario = ? AND idGrupo = ?`, [id_user, id_group]);
+};
+
+const updateGroup = ({ idGrupo, nombre, descripcion, imagen }) => {
+    console.log("LLEGO")
+    return db.query(`UPDATE grupo SET nombre = ?, descripcion = ?, imagen = ? WHERE idGrupo = ?`, [nombre, descripcion, imagen, idGrupo]);
+};
+
+
 // Exportación de módulos
 module.exports = {
     selectGroupsByUser,
@@ -47,5 +57,7 @@ module.exports = {
     insertUserToGroup,
     deleteGroup,
     updateStatus,
-    selectStatus
+    selectStatus,
+    getUserGroup,
+    updateGroup
 };
