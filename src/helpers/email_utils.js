@@ -3,7 +3,8 @@ const nodemailer = require('nodemailer');
 
 // Definición método para envío de mail a usuario
 
-const mailer= (destinatario, asunto, cuerpo)=>{
+const mailer= (destinatario, asunto, cuerpo)=> {
+
 
     const message = {
         from: "DIVI",

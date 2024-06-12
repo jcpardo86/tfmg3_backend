@@ -2,7 +2,8 @@
 
 const Group = require('../models/group.model');
 const Spent = require('../models/spent.model');
-const Debt = require('../models/debt.model')
+const Debt = require('../models/debt.model');
+const User = require('../models/user.model');
 
 // Definición de métodos para peticiones sobre deudas
 
@@ -31,8 +32,6 @@ const updateDebtsByGroup = async (req, res, next) => {
             receptor.push(i);
         }
     } 
-    console.log ('pagador', pagador);
-    console.log('recpetor', receptor);
 
     while( i !== pagador.length && j !== receptor.length ){
 
@@ -52,8 +51,6 @@ const updateDebtsByGroup = async (req, res, next) => {
             j++;
         }
     }
-    console.log(resultados);
-    
 
     const arrIdUpdated = [];
     for(let resultado of resultados) {
@@ -63,8 +60,6 @@ const updateDebtsByGroup = async (req, res, next) => {
             arrIdUpdated.push(id_debt[0].idDeuda);
         }
     }
-
-    console.log("arrUpdate", arrIdUpdated);
 
     const [debts] = await Debt.selectDebtsByGroup(req.body.idGrupo);
     for(let i = 0; i<debts.length; i++) {
@@ -96,7 +91,17 @@ const updateDebtsByGroup = async (req, res, next) => {
 const getDebtsByGroup = async (req, res, next) => {
         const { id_group } = req.params;
     try {
+        const [group] = await Group.selectGroupById(id_group);
         const [debts] = await Debt.selectDebtsByGroup(id_group);
+
+        for(let i in debts) {
+        const [user_1] = await User.selectUserById(debts[i].idUsuario);
+        const [user_2] = await User.selectUserById(debts[i].receptor)
+        debts[i].nombre_usuario = user_1[0].nombre;
+        debts[i].nombre_receptor = user_2[0].nombre;
+        debts[i].nombre_grupo = group[0].nombre;
+        }
+
         res.json(debts);
 
     } catch(error) {

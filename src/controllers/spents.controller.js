@@ -1,5 +1,6 @@
 // Importación de módulos propios
 const Spent = require('../models/spent.model');
+const Debt = require('../models/debt.model')
 const Group = require('../models/group.model');
 const User = require('../models/user.model');
 const Mail = require('../helpers/email_utils');
@@ -43,15 +44,60 @@ const createSpent = async (req, res, next) => {
 
     try {
         const [result] = await Spent.insertSpent(req.body);
+        const [debts] = await Debt.selectDebtsByGroup(req.body.idGrupo);
+        const [user] = await User.selectUserById(req.body.idUsuario);
+        const [group] = await Group.selectGroupById(req.body.idGrupo);
+        console.log('USER', user[0].nombre)
 
-
-        const [spents] = await Spent.selectSpentsByGroup(req.body.idGrupo);
-        let cuerpo = `<p> Un nuevo gasto ha sido añadido a tu grupo ${req.body.idGrupo}. El listado de gastos actualizado es el siguiente: </p>`;
-        for (let spent of spents) {
-            cuerpo = `${cuerpo}\n` + `<p>Gasto: ${spent.idGasto} - Descripcion: ${spent.descripcion} - Importe: ${spent.importe} - Pagador: ${spent.idUsuario}</p>\n`;
+        for(let i in debts) {
+        const [user_1] = await User.selectUserById(debts[i].idUsuario);
+        const [user_2] = await User.selectUserById(debts[i].receptor)
+        debts[i].nombre_usuario = user_1[0].nombre;
+        debts[i].nombre_receptor = user_2[0].nombre;
+        debts[i].nombre_grupo = group[0].nombre;
         }
+
+        console.log('Estoy en createSpent')
+        
+        const cuerpo_1 = `<!DOCTYPE html>
+                          <html lang="es-ES">
+                          <head>
+                          <meta charset="utf-8">
+                          <style>
+                            p {font-size: 1rem; font-weight: 300; text-align: justify;};
+                          </style>
+                          </head>
+                          <body>
+                          <p> Hola ${req.body.idUsuario}!<p> 
+                          <p>Esperamos que te encuentres bien. Queremos informarte que se ha añadido un nuevo gasto a tu grupo de DIVI "${debts[0].nombre_grupo}"</p>
+                          <p><strong>Detalles del nuevo gasto:<strong><p>
+                          <ul style="font-size:1rem; font-weight: 300;">
+                            <li><strong>Descripción:  </strong>${req.body.descripcion}</li>
+                            <li><strong>Importe:  </strong>${req.body.importe}</li>
+                            <li><strong>Fecha:  </strong>${req.body.fecha}</li>
+                            <li><strong>Pagador: </strong>${user[0].nombre}</li>
+                          </ul>
+                          <p>A continuación, te compartimos el listado actualizado de deudas de tu grupo:</p>
+                          <ul>`;
+        let cuerpo_2 = "";
+        for (let debt of debts) {
+            cuerpo_2 = cuerpo_2 + `<li style="font-size:1rem; font-weight:300;"><strong>${debt.nombre_usuario}</strong> debe a <strong>${debt.nombre_receptor}</strong> la cantidad de ${debt.importe} €</li>`;
+        }
+        const cuerpo_3 = `</ul>
+                          <p>Para ver más detalles o realizar alguna acción, por favor ingresa a tu cuenta en la aplicación DIVI.</p>
+                          <p>Si tienes alguna pregunta o necesitas asistencia, no dudes en contactarnos.</p>
+                          <p>¡Gracias por usar DIVI para compartir tus gastos!</p>
+                          <p>Saludos,</p>
+                          <p>El equipo de DIVI</p>
+                          <img src="../images/logo/logo_divi.png"></img>
+                          </body>`
+        
+        const cuerpo = cuerpo_1 + cuerpo_2 + cuerpo_3;
+
+        console.log(cuerpo);
+
         const [users] = await Group.selectUsersByGroup(req.body.idGrupo); 
-        const asunto = "DIVI - Nuevo Gasto";
+        const asunto = "¡Nuevo gasto añadido a tu grupo en DIVI";
         //for(let user of users) {
            //Mail.mailer(user.email, asunto, cuerpo);
            Mail.mailer("lara.martin.lagares@gmail.com", asunto, cuerpo);
