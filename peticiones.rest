@@ -175,7 +175,7 @@ Authorization: {{TOKEN}}
 
 ############# DEBTS ##############
 
-GET {{HOST}}/api/debts/47
+GET {{HOST}}/api/debts/56
 Authorization: {{TOKEN}}
 
 ###
