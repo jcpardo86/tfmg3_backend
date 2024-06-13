@@ -37,6 +37,43 @@ const getUsersByGroup = async (req, res, next) => {
     };
 };
 
+const getStatus = async (req, res, next) => {
+
+    try {
+        const [ status ] = await Group.selectStatus(req.params.id_group);
+        res.json(status[0].estado);
+    } catch(error) {
+        next(error);
+    };
+};
+
+const getImageGroup = async (req, res, next) => {
+    
+      const id_group = req.params.id_group;
+    
+      if (!id_group) {
+        return res.status(400).json('Faltan datos requeridos');
+      }
+    
+      const [image] = await Group.selectImageGroup(id_group);
+    
+      if (!image) {
+        return res.status(404).json('Imagen no encontrada');
+      }
+    
+      res.json(image);
+    
+};  
+
+const getUserGroup = async (req, res, next) => {
+    try {
+        const [ groups ] = await Group.getUserGroup(req.params.id_user, req.params.id_group);
+        console.log(groups)
+        res.json(groups);
+    } catch(error) {
+        next(error);
+    };
+};
 
 // *****************revisar***************************
 const createGroup = async (req, res, next) => {
@@ -57,11 +94,27 @@ const addUserToGroup = async (req, res, next) => {
     };
 };
 
-// ****************revisar****************************
-const updateGroup = (req, res, next) => {
-    const {id_group} = req.params; //destructuring: del objeto req.params quiero extraer el valor de la clave paciente_id y además almacenarlo en una variable llamadad paciente_id
-    res.send(`Actualizamos el grupo ${ id_group }`);
+const updateGroup = async(req, res) => {
+    try {
+        const [ group ] = await Group.updateGroup(req.body);
+        res.json(group);
+    } catch(err) {
+        res.status(500).json({ error: err.message });
+    };
 };
+
+
+const updateStatusGroup = async (req, res, next) => {
+    const { id_group } = req.params;
+    try {
+        console.log(req.body);
+        const [ result ] = await Group.updateStatus(parseInt(id_group), req.body.status);
+        res.json(result);
+    } catch(error) {
+        next(error);
+    };
+
+}
 
 const deleteGroup = async (req, res, next) => {
     const {id_group} = req.params; 
@@ -79,8 +132,12 @@ module.exports = {
     getGroupsByUser,
     getGroupById, 
     getUsersByGroup,
+    getImageGroup,
     createGroup,
     addUserToGroup,
     updateGroup,
-    deleteGroup
+    deleteGroup,
+    updateStatusGroup,
+    getStatus,
+    getUserGroup,
 }

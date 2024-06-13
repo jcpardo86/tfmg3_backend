@@ -3,7 +3,8 @@ const nodemailer = require('nodemailer');
 
 // Definición método para envío de mail a usuario
 
-const mailer= ()=>{
+const mailer= (destinatario, asunto, cuerpo)=> {
+
 
     /*const sendGenericMail = (from, to, subject, text, html=None) => {
     const message = {
@@ -16,11 +17,11 @@ const mailer= ()=>{
 }*/
 
     const message = {
-        from: "lara.martin.lagares@gmail.com",
-        to: "lara.martin.lagares@gmail.com",
-        subject: "Bienvenido a DIVI",
+        from: "DIVI",
+        to: destinatario,
+        subject: asunto,
         text: "Plaintext version of the message",
-        html: "<p>Enhorabuena! Has creado correctamente tu cuenta en DIVI. Accede al siguiente enlace para Iniciar Sesión: http://localhost:4200/home</p>"
+        html: cuerpo
     };
 
     const transporter = nodemailer.createTransport({

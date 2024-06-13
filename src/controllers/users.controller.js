@@ -1,11 +1,11 @@
 // Importación de módulo externo
 const bcrypt = require('bcryptjs');
+const { log } = require('console');
 
 // Importación de módulos propios
 const User = require('../models/user.model');
-const Mail = require('../helpers/email_utils')
+const Mail = require('../helpers/email_utils');
 const { createToken } = require('../helpers/token_utils');
-
 
 
 // Definición de métodos para peticiones sobre usuarios
@@ -19,8 +19,9 @@ const userRegister = async (req, res, next) => {
         if (result.affectedRows !== 1) {
             return res.status(500).json({ error: 'Registro no correcto'});          
         }
-
-        Mail.mailer();
+        const asunto = "Bienvenido a DIVI";
+        const cuerpo = "<p>Enhorabuena! Has creado correctamente tu cuenta en DIVI. Accede al siguiente enlace para Iniciar Sesión: http://localhost:4200/home</p>";
+        Mail.mailer(req.body.email, asunto, cuerpo);
 
         res.json({ success: 'Registro correcto'});
         
@@ -84,11 +85,48 @@ const getUserByEmail = async (req, res, next) => {
     };
 };
 
+const getImageUser = async (req, res) => {
+
+	log("req.params.id_user", req.params.idUsuario)
+
+
+  const userId = req.params.id_user;
+	console.log("req.params.id_user", req.params.idUsuario);
+
+  if (!userId) {
+	return res.status(400).json('Faltan datos requeridos');
+  }
+
+  const [image] = await User.selectImageUser(userId);
+
+  if (!image) {
+	return res.status(404).json('Imagen no encontrada');
+  }
+
+  res.json(image);
+
+};
+
+const updateUserById = async (req, res, next) => {
+
+    try {
+        req.body.password = bcrypt.hashSync(req.body.password, 8); 
+        const [ response ] = await User.updateById(req.params.id_user, req.body);
+        res.json(response);
+
+    } catch (error) {
+        next(error);
+    }
+
+}
+
 
 // Exportación de módulos
 module.exports = {
     userRegister,
     userLogin, 
     getUserById,
-    getUserByEmail
+    getUserByEmail,
+    getImageUser,
+    updateUserById
 }
