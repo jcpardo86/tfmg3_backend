@@ -7,13 +7,10 @@ const crypto = require('crypto');
 
 // Definición middleware para generación de token
 const createToken = (user)=> {
-
     const payload = {
-        id_user: user.idUsuarios,
-        rol_user: user.rol,
+        id_user: user.idUsuario,
         exp: dayjs().add(3600, 'minutes').unix(), // Fecha de caducidad al login
     }
-
     return jwt.sign(payload, process.env.SECRET_KEY);  //Codificamos el payload para generar el token
 
 }

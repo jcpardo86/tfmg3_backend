@@ -2,17 +2,18 @@
 const router = require('express').Router();
 
 // Importacion de módulos propios - controladores y middleware
-const { getSpentsByGroup, getTotalSpentByGroup, getCuentas, createSpent, updateSpent, deleteSpent, getSpentById, updateSaldo, updateImporteLiquidado} = require('../../controllers/spents.controller');
+const { getSpentsByGroup, getTotalSpentByGroup, /*getCuentas*/ createSpent, updateSpent, deleteSpent, getSpentById, updateSaldo, updateImporteLiquidado} = require('../../controllers/spents.controller');
+const { checkAdmin } = require('../../helpers/middlewares');
 
 // Definición de rutas y handlers
 router.get('/:id_group', getSpentsByGroup);
 router.get('/total/:id_group', getTotalSpentByGroup);
 router.get('/spent/:id_spent', getSpentById);
-router.get('/saldos/:id_group', getCuentas);
-router.put('/:id_spent', updateSpent);
-router.put('/', updateSaldo);
-router.put('/liquidar/:id_group', updateImporteLiquidado);
-router.post('/', createSpent);
+//router.get('/saldos/:id_group', getCuentas);
+router.put('/:id_spent', checkAdmin, updateSpent);
+router.put('/', checkAdmin, updateSaldo);
+router.put('/liquidar/:id_group', checkAdmin, updateImporteLiquidado);
+router.post('/', checkAdmin, createSpent);
 router.delete('/:id_spent', deleteSpent);
 
 
