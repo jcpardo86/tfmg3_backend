@@ -19,9 +19,10 @@ const userRegister = async (req, res, next) => {
         if (result.affectedRows !== 1) {
             return res.status(500).json({ error: 'Registro no correcto'});          
         }
-        const asunto = "Bienvenido a DIVI";
-        const cuerpo = "<p>Enhorabuena! Has creado correctamente tu cuenta en DIVI. Accede al siguiente enlace para Iniciar Sesión: http://localhost:4200/home</p>";
-        Mail.mailer(req.body.email, asunto, cuerpo);
+
+        const [user] = await User.selectUserByEmail(req.body.email);
+        console.log('estoy en register');
+        Mail.mailer(req.body, user[0], "new_register");
 
         res.json({ success: 'Registro correcto'});
         
@@ -56,8 +57,6 @@ const userLogin = async (req, res, next) => {
         next(error);
     }
 };
-
-
 
 const getUserById = async (req, res, next) => {
 

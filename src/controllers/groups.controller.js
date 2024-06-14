@@ -37,6 +37,7 @@ const getUsersByGroup = async (req, res, next) => {
     };
 };
 
+
 const getStatus = async (req, res, next) => {
 
     try {
@@ -68,7 +69,6 @@ const getImageGroup = async (req, res, next) => {
 const getUserGroup = async (req, res, next) => {
     try {
         const [ groups ] = await Group.getUserGroup(req.params.id_user, req.params.id_group);
-        console.log(groups)
         res.json(groups);
     } catch(error) {
         next(error);
@@ -107,7 +107,6 @@ const updateGroup = async(req, res) => {
 const updateStatusGroup = async (req, res, next) => {
     const { id_group } = req.params;
     try {
-        console.log(req.body);
         const [ result ] = await Group.updateStatus(parseInt(id_group), req.body.status);
         res.json(result);
     } catch(error) {

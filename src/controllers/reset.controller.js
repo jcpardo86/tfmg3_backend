@@ -1,5 +1,4 @@
 // Importación de módulos propios
-const { sendRecoveryEmail } = require('../helpers/reset_utils');
 const resetModel = require('../models/reset.model');
 // const tokenUtils = require('../helpers/token_utils');
 // const nodeMailer = require('nodemailer');
@@ -7,6 +6,7 @@ const crypto = require('crypto');
 const bcrypt = require('bcryptjs');
 const { log } = require('console');
 const { userRegister } = require('./users.controller');
+const Mail = require('../helpers/email_utils');
 
 
 
@@ -21,6 +21,8 @@ const forgotPassword = async (req, res, next) => {
 		log("email en try", email);
 
 		const user = await resetModel.findUserByEmail(email);
+
+		console.log("user", user)
 		log("usuario encontrado", user);
 
 		if (user[0].length === 0) {
@@ -38,7 +40,9 @@ const forgotPassword = async (req, res, next) => {
 		const resetUrl = `${req.protocol}://localhost:4200/reset/${resetToken}`;
 
 
-		const sendMail = await sendRecoveryEmail(email, resetToken,resetUrl);
+		
+		//const sendMail = await sendRecoveryEmail(email, resetToken,resetUrl);
+		await Mail.mailer(resetUrl, user[0][0], "reset_token" )
 
 
 		// console.log("usuario con nuevo token password guardado",user);

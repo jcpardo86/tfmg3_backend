@@ -1,8 +1,7 @@
 @PORT = 3000
 @HOST = http://localhost:{{PORT}}
 
-@TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTgyMzA1ODgsImlhdCI6MTcxODAxNDU4OH0.emgdgrZAhJ37jo5fylxYjncGTC08-BDraqvsYyvJnyk
-
+@TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTg1ODExNTEsImlhdCI6MTcxODM2NTE1MX0.FWB4n5Zt7VIIVmfcsEK4t2MeGUgaHRUJNbEbEXfTpVg
 ################ GROUPS ####################
 GET {{HOST}}/api/groups/13
 Authorization: {{TOKEN}}
@@ -12,7 +11,11 @@ GET {{HOST}}/api/groups/group/1
 Authorization: {{TOKEN}}
 
 ###
-GET {{HOST}}/api/groups/users/2
+GET {{HOST}}/api/groups/users/66
+Authorization: {{TOKEN}}
+
+###
+GET {{HOST}}/api/groups/51/72
 Authorization: {{TOKEN}}
 
 ###
@@ -77,10 +80,10 @@ POST {{HOST}}/api/users/register
 Content-Type: application/json
 
 {
-    "nombre": "Paloma",
-    "apellidos": "Angulo",
-    "email": "paloma.angulo@gmail.com",
-    "password": "12345"
+    "nombre": "Luis",
+    "apellidos": "García",
+    "email": "luis.garcia@gmail.com",
+    "password": "123456"
 }
 
 ###
@@ -140,9 +143,9 @@ Authorization: {{TOKEN}}
 Content-Type: application/json
 
 {
-    "idGrupo": 2,
-    "idUsuario": 13,
-    "importe": 85,
+    "idGrupo": 67,
+    "idUsuario": 18,
+    "importe": 103,
     "descripcion": "factura luz",
     "fecha": "2024-02-18"
 }
