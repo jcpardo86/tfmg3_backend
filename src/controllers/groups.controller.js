@@ -1,6 +1,8 @@
 
 // Importación de módulo interno
 const Group = require('../models/group.model');
+const Mail = require('../helpers/email_utils');
+const User = require('../models/user.model');
 
 
 // Definición de métodos para peticiones sobre grupos
@@ -80,7 +82,13 @@ const createGroup = async (req, res, next) => {
 const addUserToGroup = async (req, res, next) => {
     try {
         const [result] = await Group.insertUserToGroup(req.body);
+
+        //Enviamos email al usuario para informarle de que ha sido añadido a un grupo
+        const [user] = await User.selectUserById(req.body.idUsuario);
+        await Mail.mailer(req.body, user[0], "new_group");
+        
         res.json(result);
+        
     } catch(error) {
         next(error);
     };
