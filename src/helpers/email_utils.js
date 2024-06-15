@@ -25,15 +25,17 @@ const mailer= async (data, destinatario, option)=> {
             const [user] = await User.selectUserById(data.idUsuario);
             const [group] = await Group.selectGroupById(data.idGrupo);
 
+            console.log(group)
+
             cuerpo_1 = 
             `<p style="font-size:1rem; font-weight:300;"> Hola ${destinatario.nombre}!<p> 
-             <p style="font-size:1rem; font-weight:300;">Esperamos que te encuentres bien. Queremos informarte que se ha añadido un nuevo gasto a tu grupo de DIVI "${group.nombre_grupo}"</p>
-             <p style="font-size:1rem; font-weight:300;"><strong>Detalles del nuevo gasto:<strong><p>
+             <p style="font-size:1rem; font-weight:300;">Esperamos que te encuentres bien. Queremos informarte que se ha añadido un nuevo gasto a tu grupo de DIVI <span style="font-weight:500">"${group[0].nombre}".</span></p>
+             <p style="font-size:1rem;"><strong>Detalles del nuevo gasto:<strong><p>
              <ul>
-               <li style="font-size:1rem; font-weight:300;"><strong>Descripción:  </strong>${data.descripcion}</li>
-               <li style="font-size:1rem; font-weight:300;"><strong>Importe:  </strong>${data.importe}</li>
-               <li style="font-size:1rem; font-weight:300;"><strong>Fecha:  </strong>${data.fecha}</li>
-               <li style="font-size:1rem; font-weight:300;"><strong>Pagador: </strong>${user[0].nombre}</li>
+               <li style="font-size:1rem; font-weight:300;"><span style="font-weight:500">Descripción:  </span>${data.descripcion}</li>
+               <li style="font-size:1rem; font-weight:300;"><span style="font-weight:500">Importe:  </span>${data.importe}</li>
+               <li style="font-size:1rem; font-weight:300;"><span style="font-weight:500">Fecha:  </span>${data.fecha}</li>
+               <li style="font-size:1rem; font-weight:300;"><span style="font-weight:500">Pagador: </span>${user[0].nombre}</li>
              </ul>
              <p style="font-size:1rem; font-weight:300;">A continuación, te compartimos el listado actualizado de deudas que están actualmente pendientes de pago en el grupo:</p>
              <ul>`;
@@ -48,13 +50,13 @@ const mailer= async (data, destinatario, option)=> {
                 }
                 for (let debt of debts) {
                     if(debt.is_pagada===0) {
-                        cuerpo_2 = cuerpo_2 + `<li style="font-size:1rem; font-weight:300;">${debt.nombre_usuario} debe a ${debt.nombre_receptor} la cantidad de ${debt.importe} €</li>`;
+                        cuerpo_2 = cuerpo_2 + `<li style="font-size:1rem; font-weight:300;"><span style="font-weight:500">${debt.nombre_usuario}</span> debe a <span style="font-weight:500">${debt.nombre_receptor}</span> la cantidad de <span style="font-weight:500">${debt.importe} €</span></li>`;
                     } else {
-                        cuerpo_2 = `<li style="font-size:1rem; font-weight:300;">No hay deudas pendientes</li>`
+                        cuerpo_2 = `<li style="font-size:1rem; font-weight:500;">No hay deudas pendientes</li>`
                     }
                 }
             } else {
-                cuerpo_2 = `<li style="font-size:1rem; font-weight:300;">No hay deudas pendientes</li>`;
+                cuerpo_2 = `<li style="font-size:1rem; font-weight:500;">No hay deudas pendientes</li>`;
             }
 
             cuerpo_3 = 
@@ -62,7 +64,7 @@ const mailer= async (data, destinatario, option)=> {
                 <p style="font-size:1rem; font-weight:300;">Para ver más detalles o realizar alguna acción, por favor ingresa a tu cuenta en la aplicación DIVI.</p>
                 <p style="font-size:1rem; font-weight:300;">Si tienes alguna pregunta o necesitas asistencia, no dudes en contactarnos.</p>
                 <p style="font-size:1rem; font-weight:300;">¡Gracias por usar DIVI para compartir tus gastos!</p>
-                <p style="font-size:1rem; font-weight:300;">Saludos,</p>
+                <p style="font-size:1rem; font-weight:300; margin-top:20px">Saludos,</p>
                 <p style="font-size:1rem; font-weight:300;">El equipo de DIVI</p>`
             
             cuerpo = cuerpo_1 + cuerpo_2 + cuerpo_3;
@@ -73,9 +75,9 @@ const mailer= async (data, destinatario, option)=> {
         case "new_register":
             asunto = "Bienvenido a DIVI";
             cuerpo = 
-                    `<p>Enhorabuena ${destinatario.nombre}!</p>
+                    `<p>Hola ${destinatario.nombre}!</p>
                     <p>Has creado correctamente tu cuenta en DIVI. Accede al siguiente enlace para Iniciar Sesión: http://localhost:4200/home</p>
-                    <p>¡Gracias por usar DIVI para compartir tus gastos!</p>
+                    <p style="margin-top:20px">¡Gracias por usar DIVI para compartir tus gastos!</p>
                     <p>Saludos,</p>
                     <p>El equipo de DIVI</p>`;
             break;
@@ -86,9 +88,32 @@ const mailer= async (data, destinatario, option)=> {
             cuerpo = `
                     <p>Hola ${destinatario.nombre}!</p>
                     <p>Para cambiar tu contraseña de acceso a DIVI, pincha en el siguiente link:</p> <br><a href="${data}">${data}</a>
-                    <p>¡Gracias por usar DIVI para compartir tus gastos!</p>
+                    <p style="margin-top:20px">¡Gracias por usar DIVI para compartir tus gastos!</p>
                     <p>Saludos,</p>
                     <p>El equipo de DIVI</p>`;
+            break;
+
+        case "new_group":
+            asunto = "Nuevo grupo en DIVI!";
+            cuerpo = `
+                    <p style="font-size:1rem; font-weight:300;">Hola ${destinatario.nombre}!</p>
+                    <p style="font-size:1rem; font-weight:300;">Esperamos que te encuentres bien.</p>
+                    <p style="font-size:1rem; font-weight:300;">Nos complace informarte que has sido añadido a un nuevo grupo en la aplicación DIVI para compartir gastos. Este grupo ha sido creado para facilitar la gestión de los gastos comunes de manera sencilla y eficiente.</p>
+                    <p style="font-size:1rem; font-weight:500">Detalles del grupo:<p>
+                    <ul>
+                        <li style="font-size:1rem; font-weight:300;">Nombre del grupo: ${data.idGrupo}</li>
+                        <li style="font-size:1rem; font-weight:300;">Descripción: ${data.idGrupo}</li>
+                    </ul>
+                    <p style="font-size:1rem; font-weight:500"">¿Cómo empezar?:<p>
+                    <ol>
+                        <li style="font-size:1rem; font-weight:300;">Inicia sesión en tu cuenta de DIVI.</li>
+                        <li style="font-size:1rem; font-weight:300;">Selecciona en tu listado de grupos el grupo "${data.idGrupo}"</li>
+                        <li style="font-size:1rem; font-weight:300;">Explora las funcionalidades y comienza a gestionar los gastos con tus compañeros.</li>
+                    </ol>
+                    <p style="font-size:1rem; font-weight:300;">Si tienes alguna pregunta o necesitas ayuda para comenzar, no dudes en ponerte en contacto con nuestro equipo de soporte.</p>
+                    <p style="font-size:1rem; font-weight:300;">¡Estamos seguros de que encontrarás DIVI muy útil para simplificar la gestión de tus gastos compartidos!</p>
+                    <p style="font-size:1rem; font-weight:300;">Saludos,</p>
+                    <p style="font-size:1rem; font-weight:300;">El equipo de DIVI</p>`;
             break;
     
     }
