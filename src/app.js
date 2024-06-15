@@ -1,7 +1,7 @@
 // Importación de librerías externas
 const express = require('express');
 const cors = require('cors');
-//const path = require('path');
+const path = require('path');
 
 
 // Creación de la APP Express
@@ -29,13 +29,11 @@ app.use((error, req, res, next) => {
     next();
 });
 
-//sirve archivos estáticos desde la carpeta images/user
-const path = require('path');
+// Sirve archivos estáticos desde la carpeta images/user
 app.use('/userimage', express.static(path.join(__dirname, 'images', 'user')));
 
 
-//sirve archivos estáticos desde la carpeta images/groups
-
+// Sirve archivos estáticos desde la carpeta images/groups
 app.use('/groupimage', express.static(path.join(__dirname, 'images', 'group')));
 
 

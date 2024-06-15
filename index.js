@@ -38,12 +38,11 @@ io.on('connection', async (socket) => {
 
     // Cuando se reciba nuevo mensaje en el chat, lo insertamos en base de datos y lo emitimos a todos los clientes conectados
     socket.on('chat_message_client', async (msg) => {
-
         try {
             const [result] = await Message.insertMessage(msg.idUsuario, msg.idGrupo, msg.fecha_hora, msg.texto);
             io.emit('chat_message_server', msg);
         } catch(error) {
-            console.log(error);
+            next(error);
         }
     });
 });
