@@ -28,7 +28,6 @@ const getGroupById = async (req, res, next) => {
 };
 
 const getUsersByGroup = async (req, res, next) => {
-
     try {
         const [ users ] = await Group.selectUsersByGroup(req.params.id_group);
         res.json(users);
@@ -39,7 +38,6 @@ const getUsersByGroup = async (req, res, next) => {
 
 
 const getStatus = async (req, res, next) => {
-
     try {
         const [ status ] = await Group.selectStatus(req.params.id_group);
         res.json(status[0].estado);
@@ -49,33 +47,27 @@ const getStatus = async (req, res, next) => {
 };
 
 const getImageGroup = async (req, res, next) => {
-    
       const id_group = req.params.id_group;
-    
       if (!id_group) {
         return res.status(400).json('Faltan datos requeridos');
       }
-    
       const [image] = await Group.selectImageGroup(id_group);
-    
       if (!image) {
         return res.status(404).json('Imagen no encontrada');
       }
-    
-      res.json(image);
-    
+      res.json(image);   
 };  
 
 const getUserGroup = async (req, res, next) => {
     try {
-        const [ groups ] = await Group.getUserGroup(req.params.id_user, req.params.id_group);
+        const [ groups ] = await Group.selectUserGroup(req.params.id_user, req.params.id_group);
         res.json(groups);
     } catch(error) {
         next(error);
     };
 };
 
-// *****************revisar***************************
+
 const createGroup = async (req, res, next) => {
     try {
         const [result] = await Group.insertGroup(req.body);
@@ -112,8 +104,7 @@ const updateStatusGroup = async (req, res, next) => {
     } catch(error) {
         next(error);
     };
-
-}
+};
 
 const deleteGroup = async (req, res, next) => {
     const {id_group} = req.params; 
@@ -132,11 +123,11 @@ module.exports = {
     getGroupById, 
     getUsersByGroup,
     getImageGroup,
+    getStatus,
+    getUserGroup,
     createGroup,
     addUserToGroup,
     updateGroup,
-    deleteGroup,
     updateStatusGroup,
-    getStatus,
-    getUserGroup,
+    deleteGroup
 }

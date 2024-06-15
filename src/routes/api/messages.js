@@ -5,7 +5,6 @@ const router = require('express').Router();
 const { getMessagesByGroup } = require('../../controllers/messages.controller');
 
 
-
 // Definición de rutas y handlers
 router.get('/:id_group', getMessagesByGroup);
 

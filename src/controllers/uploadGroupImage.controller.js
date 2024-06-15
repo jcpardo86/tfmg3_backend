@@ -1,10 +1,16 @@
+// Importación de módulos externos
 const multer = require('multer');
 const path = require('path');
-const { uploadGroupImage} = require('../models/upload.model'); // Asegúrate de que la ruta sea correcta
+
+//Importación de módulos propios
+const { uploadGroupImage} = require('../models/upload.model'); 
+
+
+// Definición de métodos para peticiones sobre subida de imágen de grupo
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, '../images/group')); // Asegúrate de que la ruta sea correcta
+    cb(null, path.join(__dirname, '../images/group')); 
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
@@ -35,26 +41,3 @@ exports.uploadGroupImage = async (req, res) => {
     res.json('Imagen subida correctamente');
 
 };
-
-//Me llevo esta función al controlador de grupos
-/*exports.getGroupImage = async (req, res) => {
-
-	console.log("req.params.id_group", req.params.id_group);
-	const groupId = req.params.id_group;
-	console.log("groupId", groupId);
-
-	console.log(groupId);
-
-  if (!groupId) {
-	return res.status(400).json('Faltan datos requeridos');
-  }
-
-  const [image] = await getGroupImageData(groupId);
-
-  if (!image) {
-	return res.status(404).json('Imagen no encontrada');
-  }
-
-  res.json(image);
-
-};*/

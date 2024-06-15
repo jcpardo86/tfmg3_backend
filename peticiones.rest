@@ -214,7 +214,7 @@ POST {{HOST}}/api/reset
 Content-Type: application/json
 
 {
-  "email": "josue.gamonal@gmail.com"
+  "email": "lara.martin.lagares@gmail.com"
 }
 
 # Restablecer la contraseña usando el token recibido en el correo

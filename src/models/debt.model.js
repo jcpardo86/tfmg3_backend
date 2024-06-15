@@ -26,10 +26,10 @@ const deleteDebtById = (id_debt) => {
 
 // Exportación de módulos
 module.exports = {
- selectDebtsByGroup,
- selectDebt,
- updateDebtById,
- insertDebt,
- deleteDebtById,
- updateStatus
+    selectDebtsByGroup,
+    selectDebt,
+    updateDebtById,
+    updateStatus,
+    insertDebt,
+    deleteDebtById 
 };

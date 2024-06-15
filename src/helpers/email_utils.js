@@ -1,10 +1,11 @@
 // Importación de módulo externo
 const nodemailer = require('nodemailer');
 
+//Importación de módulos propios
 const Group = require('../models/group.model');
-const Spent = require('../models/spent.model');
 const Debt = require('../models/debt.model');
 const User = require('../models/user.model');
+
 
 // Definición método para envío de mail a usuario
 
@@ -121,12 +122,11 @@ const mailer= async (data, destinatario, option)=> {
         }
     });
 
-    return ({message: "Función mailer completada"});
+    return ("Respuesta: El mensaje ha sido enviado");
 
 };
 
 // Exportación de módulo
-
 module.exports = {
     mailer
 }

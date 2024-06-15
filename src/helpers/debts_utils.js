@@ -1,8 +1,6 @@
 // Importación de módulos propios
 const Spent = require('../models/spent.model');
-const Debt = require('../models/debt.model')
 const Group = require('../models/group.model');
-const User = require('../models/user.model');
 
 
 const calculateNewDebts = async (data) => {
