@@ -1,6 +1,9 @@
 // Importación de módulos propios
 const Message = require('../models/message.model');
 
+
+// Definición de métodos para peticiones sobre tabla Mensaje
+
 const getMessagesByGroup = async (req, res, next) => {
 
     try {

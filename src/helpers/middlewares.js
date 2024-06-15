@@ -3,9 +3,10 @@
 const jwt = require('jsonwebtoken');
 
 // Importación de módulo interno
-const User = require('../models/user.model');
+const Group = require('../models/group.model');
 
 // Definición middleware para validación de token
+
 const checkToken = async (req, res, next) => {
 
     // Comprobamos si la petición lleva el token
@@ -33,7 +34,25 @@ const checkToken = async (req, res, next) => {
 
 };
 
-// Exportamos el módulo
+const checkAdmin = async (req, res, next) =>{
+
+    if (req.params.id_group !== undefined) {
+        idGrupo = req.params.id_group;
+    } else {
+        idGrupo = req.body.idGrupo;
+    }
+
+    const [user] = await Group.selectUserGroup(req.user, idGrupo);
+    console.log(user);
+
+    if(user[0].rol !== "admin") {
+        return res.status(403).json({ error: 'Sin acceso. Debes ser administrador del grupo' });
+    }
+    next();
+}
+
+// Exportación de módulos
 module.exports = {
     checkToken,
+    checkAdmin
 }

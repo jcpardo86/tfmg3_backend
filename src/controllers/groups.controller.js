@@ -1,6 +1,8 @@
 
 // Importación de módulo interno
 const Group = require('../models/group.model');
+const Mail = require('../helpers/email_utils');
+const User = require('../models/user.model');
 
 
 // Definición de métodos para peticiones sobre grupos
@@ -28,7 +30,6 @@ const getGroupById = async (req, res, next) => {
 };
 
 const getUsersByGroup = async (req, res, next) => {
-
     try {
         const [ users ] = await Group.selectUsersByGroup(req.params.id_group);
         res.json(users);
@@ -37,8 +38,8 @@ const getUsersByGroup = async (req, res, next) => {
     };
 };
 
-const getStatus = async (req, res, next) => {
 
+const getStatus = async (req, res, next) => {
     try {
         const [ status ] = await Group.selectStatus(req.params.id_group);
         res.json(status[0].estado);
@@ -48,34 +49,27 @@ const getStatus = async (req, res, next) => {
 };
 
 const getImageGroup = async (req, res, next) => {
-    
       const id_group = req.params.id_group;
-    
       if (!id_group) {
         return res.status(400).json('Faltan datos requeridos');
       }
-    
       const [image] = await Group.selectImageGroup(id_group);
-    
       if (!image) {
         return res.status(404).json('Imagen no encontrada');
       }
-    
-      res.json(image);
-    
+      res.json(image);   
 };  
 
 const getUserGroup = async (req, res, next) => {
     try {
-        const [ groups ] = await Group.getUserGroup(req.params.id_user, req.params.id_group);
-        console.log(groups)
+        const [ groups ] = await Group.selectUserGroup(req.params.id_user, req.params.id_group);
         res.json(groups);
     } catch(error) {
         next(error);
     };
 };
 
-// *****************revisar***************************
+
 const createGroup = async (req, res, next) => {
     try {
         const [result] = await Group.insertGroup(req.body);
@@ -88,7 +82,13 @@ const createGroup = async (req, res, next) => {
 const addUserToGroup = async (req, res, next) => {
     try {
         const [result] = await Group.insertUserToGroup(req.body);
+
+        //Enviamos email al usuario para informarle de que ha sido añadido a un grupo
+        const [user] = await User.selectUserById(req.body.idUsuario);
+        await Mail.mailer(req.body, user[0], "new_group");
+        
         res.json(result);
+        
     } catch(error) {
         next(error);
     };
@@ -107,14 +107,12 @@ const updateGroup = async(req, res) => {
 const updateStatusGroup = async (req, res, next) => {
     const { id_group } = req.params;
     try {
-        console.log(req.body);
         const [ result ] = await Group.updateStatus(parseInt(id_group), req.body.status);
         res.json(result);
     } catch(error) {
         next(error);
     };
-
-}
+};
 
 const deleteGroup = async (req, res, next) => {
     const {id_group} = req.params; 
@@ -133,11 +131,11 @@ module.exports = {
     getGroupById, 
     getUsersByGroup,
     getImageGroup,
+    getStatus,
+    getUserGroup,
     createGroup,
     addUserToGroup,
     updateGroup,
-    deleteGroup,
     updateStatusGroup,
-    getStatus,
-    getUserGroup,
+    deleteGroup
 }
