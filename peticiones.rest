@@ -1,7 +1,7 @@
 @PORT = 3000
 @HOST = http://localhost:{{PORT}}
 
-@TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTg1ODExNTEsImlhdCI6MTcxODM2NTE1MX0.FWB4n5Zt7VIIVmfcsEK4t2MeGUgaHRUJNbEbEXfTpVg
+@TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjo1MSwiZXhwIjoxNzE4ODE4NTgyLCJpYXQiOjE3MTg2MDI1ODJ9.ie3Z6GNgCjTRKj57gNwf2w2xKK60Ty0RnGY4BEwv_2s
 ################ GROUPS ####################
 GET {{HOST}}/api/groups/13
 Authorization: {{TOKEN}}
@@ -91,8 +91,8 @@ POST {{HOST}}/api/users/login
 Content-Type: application/json
 
 {
-    "email": "ananunezrejon@gmail.com",
-    "password": "123456"
+    "email": "lara.martin.lagares@gmail.com",
+    "password": "12345"
 }
 
 ###
@@ -109,7 +109,7 @@ Authorization: {{TOKEN}}
 
 ################ SPENTS ####################
 ###
-GET {{HOST}}/api/spents/1
+GET {{HOST}}/api/spents/75
 Authorization: {{TOKEN}}
 
 ###
@@ -117,7 +117,7 @@ GET {{HOST}}/api/spents/spent/4
 Authorization: {{TOKEN}}
 
 ###
-GET {{HOST}}/api/spents/total/1
+GET {{HOST}}/api/spents/total/75
 Authorization: {{TOKEN}}
 
 ###
@@ -157,7 +157,7 @@ Content-Type: application/json
 
 {
     "idGrupo": 47,
-    "idUsuario": 15,
+    "idUsuario": 15
 }
 
 ###
@@ -178,7 +178,7 @@ Authorization: {{TOKEN}}
 
 ############# DEBTS ##############
 
-GET {{HOST}}/api/debts/56
+GET {{HOST}}/api/debts/79
 Authorization: {{TOKEN}}
 
 ###

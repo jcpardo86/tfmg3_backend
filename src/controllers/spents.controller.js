@@ -25,7 +25,7 @@ const getSpentById = async (req, res, next) => {
 const getTotalSpentByGroup = async (req, res, next) => {
     try {
         const [ totalSpent ] = await Spent.selectTotalSpentByGroup(req.params.id_group);
-        res.json(parseInt(totalSpent[0].total_importe));
+        res.json(Number(Number(totalSpent[0].total_importe).toFixed(2)));
     } catch(error) {
         next(error);
     };
@@ -60,7 +60,7 @@ const updateSaldo = async (req, res, next) => {
         const [[porcentaje]] = await Spent.selectPorcentaje(req.body.idGrupo, req.body.idUsuario);
         const [[spentTotalGroup]] = await Spent.selectTotalSpentByGroup(req.body.idGrupo); 
         const [liquidado] = await Spent.selectLiquidado(req.body.idUsuario, req.body.idGrupo);
-        const saldo = parseInt(spentTotalUser[0].total_importe) - parseInt(spentTotalGroup.total_importe) * parseInt(porcentaje.porcentaje)/100 + liquidado[0].importe_liquidado;
+        const saldo = Number(Number(spentTotalUser[0].total_importe).toFixed(2)) - (Number(Number(spentTotalGroup.total_importe).toFixed(2))) * Number(Number((porcentaje.porcentaje)/100).toFixed(2)) + liquidado[0].importe_liquidado;
         const resultado = await Spent.updateSaldo(saldo, req.body);
         res.json(resultado);
     } catch(error) {
