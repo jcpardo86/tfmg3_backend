@@ -31,21 +31,23 @@ const calculateNewDebts = async (data) => {
     while( i !== pagador.length && j !== receptor.length ){
 
         if ( pagador[i].saldo + receptor[j].saldo > 0 ){
-            resultados.push({idGrupo: data.idGrupo, idPagador: pagador[i].idUser, namePagador: pagador[i].nameUser, idReceptor: receptor[j].idUser, nameReceptor: receptor[j].nameUser, importe: -pagador[i].saldo});
+            resultados.push({idGrupo: data.idGrupo, idPagador: pagador[i].idUser, namePagador: pagador[i].nameUser, idReceptor: receptor[j].idUser, nameReceptor: receptor[j].nameUser, importe: -pagador[i].saldo.toFixed(2)});
             receptor[j].saldo = pagador[i].saldo + receptor[j].saldo;
             i++;
 
         } else if ( pagador[i].saldo + receptor[j].saldo === 0 ){
-            resultados.push({idGrupo: data.idGrupo, idPagador: pagador[i].idUser, namePagador: pagador[i].nameUser, idReceptor: receptor[j].idUser, nameReceptor: receptor[j].nameUser, importe: receptor[j].saldo});
+            resultados.push({idGrupo: data.idGrupo, idPagador: pagador[i].idUser, namePagador: pagador[i].nameUser, idReceptor: receptor[j].idUser, nameReceptor: receptor[j].nameUser, importe: receptor[j].saldo.toFixed(2)});
             i++;
             j++; 
 
         } else {
-            resultados.push({idGrupo: data.idGrupo, idPagador: pagador[i].idUser, namePagador: pagador[i].nameUser, idReceptor: receptor[j].idUser, nameReceptor: receptor[j].nameUser, importe: receptor[j].saldo});
+            resultados.push({idGrupo: data.idGrupo, idPagador: pagador[i].idUser, namePagador: pagador[i].nameUser, idReceptor: receptor[j].idUser, nameReceptor: receptor[j].nameUser, importe: receptor[j].saldo.toFixed(2)});
             pagador[i].saldo = pagador[i].saldo + receptor[j].saldo;
             j++;
         }
     }
+
+    console.log('resultados', resultados);
 
     return(resultados);
 };
