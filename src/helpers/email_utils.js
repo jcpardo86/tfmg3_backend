@@ -128,13 +128,13 @@ const mailer= async (data, destinatario, option)=> {
     };
 
     const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        host: 'smtp.gmail.com',
-        port: 465,
+        service: process.env.EMAIL_SERVICE,
+        host: process.env.EMAIL_HOST,
+        port: process.env.EMAIL_PORT,
         secure: true,
         auth: {
-            user: 'lara.martin.lagares@gmail.com',
-            pass: 'xnxk sbnc cdqn ayrp'
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASSWORD,
         }
     });
 
