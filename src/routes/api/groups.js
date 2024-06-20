@@ -15,8 +15,7 @@ router.get('/status/:id_group', getStatus);
 router.get('/groupimage/:id_group', getImageGroup);
 router.get('/:id_user/:id_group', getUserGroup);
 router.post('/', createGroup);
-router.put('/update', checkAdmin, updateGroup); //¿ESTA RUTA SOBRA O LA SIGUIENTE?
-router.put('/:id_group', checkAdmin, updateGroup); 
+router.put('/update/:id_group', checkAdmin, updateGroup); 
 router.put('/status/:id_group', checkAdmin, updateStatusGroup);
 router.post('/user', addUserToGroup);
 router.delete('/:id_group', deleteGroup);

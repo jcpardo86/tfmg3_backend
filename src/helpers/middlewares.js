@@ -36,6 +36,8 @@ const checkToken = async (req, res, next) => {
 
 const checkAdmin = async (req, res, next) =>{
 
+    console.log(req.params);
+
     if (req.params.id_group !== undefined) {
         idGrupo = req.params.id_group;
     } else {
@@ -43,7 +45,6 @@ const checkAdmin = async (req, res, next) =>{
     }
 
     const [user] = await Group.selectUserGroup(req.user, idGrupo);
-    console.log(user);
 
     if(user[0].rol !== "admin") {
         return res.status(403).json({ error: 'Sin acceso. Debes ser administrador del grupo' });
