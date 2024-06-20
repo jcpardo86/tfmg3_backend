@@ -1,0 +1,252 @@
+@PORT = 3000
+@HOST = http://localhost:{{PORT}}
+
+@TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjo1MSwiZXhwIjoxNzE4ODE4NTgyLCJpYXQiOjE3MTg2MDI1ODJ9.ie3Z6GNgCjTRKj57gNwf2w2xKK60Ty0RnGY4BEwv_2s
+################ GROUPS ####################
+GET {{HOST}}/api/groups/13
+Authorization: {{TOKEN}}
+
+###
+GET {{HOST}}/api/groups/group/7
+Authorization: {{TOKEN}}
+
+###
+GET {{HOST}}/api/groups/users/66
+Authorization: {{TOKEN}}
+
+###
+GET {{HOST}}/api/groups/51/72
+Authorization: {{TOKEN}}
+
+###
+GET {{HOST}}/api/groups/status/48
+Authorization: {{TOKEN}}
+
+###
+GET {{HOST}}/api/groups/groupimage/54
+Authorization: {{TOKEN}}
+
+###
+POST {{HOST}}/api/groups/
+Authorization: {{TOKEN}}
+Content-Type: application/json
+
+{
+    "nombre": "Comida de empresa 2023",
+    "descripcion": "Comida de empresa con compañeros en Valencia"
+}
+
+###
+POST {{HOST}}/api/groups/user
+Authorization: {{TOKEN}}
+Content-Type: application/json
+
+{
+    "idGrupo":26,
+    "idUsuario": 16,
+    "porcentaje": 100,
+    "rol": "guest"
+}
+
+###
+PUT {{HOST}}/api/groups/close/47
+Authorization: {{TOKEN}}
+Content-Type: application/json
+
+{
+    "estado": "close"
+}
+
+###
+DELETE {{HOST}}/api/groups/28
+Authorization: {{TOKEN}}
+
+
+################ USERS ####################
+
+###
+GET {{HOST}}/api/users/13
+Authorization: {{TOKEN}}
+
+###
+GET {{HOST}}/api/users/email/alberto.perez@gmail.com
+Authorization: {{TOKEN}}
+
+###
+GET {{HOST}}/api/users/userimage/15
+
+###
+POST {{HOST}}/api/users/register
+Content-Type: application/json
+
+{
+    "nombre": "Luis",
+    "apellidos": "García",
+    "email": "luis.garcia@gmail.com",
+    "password": "123456"
+}
+
+###
+POST {{HOST}}/api/users/login
+Content-Type: application/json
+
+{
+    "email": "lara.martin.lagares@gmail.com",
+    "password": "12345"
+}
+
+###
+PUT {{HOST}}/api/users/22
+Content-Type: application/json
+Authorization: {{TOKEN}}
+
+{
+    "nombre": "María",
+    "apellidos": "López Martín",
+    "email": "maria.lopez@gmail.com",
+    "password": "12345"   
+}
+
+################ SPENTS ####################
+###
+GET {{HOST}}/api/spents/75
+Authorization: {{TOKEN}}
+
+###
+GET {{HOST}}/api/spents/spent/4
+Authorization: {{TOKEN}}
+
+###
+GET {{HOST}}/api/spents/total/75
+Authorization: {{TOKEN}}
+
+###
+GET {{HOST}}/api/spents/saldos/46
+Authorization: {{TOKEN}}
+
+###
+POST {{HOST}}/api/spents/
+Authorization: {{TOKEN}}
+Content-Type: application/json
+
+{
+    "idUsuario": 13,
+    "idGrupo": 47,
+    "descripcion": "gasto 2.1",
+    "importe": 46,
+    "fecha": "2024-02-18"
+}
+
+###
+PUT {{HOST}}/api/spents/52
+Authorization: {{TOKEN}}
+Content-Type: application/json
+
+{
+    "idGrupo": 67,
+    "idUsuario": 18,
+    "importe": 103,
+    "descripcion": "factura luz",
+    "fecha": "2024-02-18"
+}
+
+###
+PUT {{HOST}}/api/spents/
+Authorization: {{TOKEN}}
+Content-Type: application/json
+
+{
+    "idGrupo": 47,
+    "idUsuario": 15
+}
+
+###
+PUT {{HOST}}/api/spents/liquidar/46
+Authorization: {{TOKEN}}
+Content-Type: application/json
+
+{
+    "idGrupo": 46,
+    "idPagador": 13,
+    "importe": -9
+}
+
+###
+DELETE {{HOST}}/api/spents/209
+Authorization: {{TOKEN}}
+
+
+############# DEBTS ##############
+
+GET {{HOST}}/api/debts/79
+Authorization: {{TOKEN}}
+
+###
+PUT {{HOST}}/api/debts/status
+Authorization: {{TOKEN}}
+Content-Type: application/json
+
+{
+    "idDeuda": 23,
+    "estado": 1
+}
+
+###
+PUT {{HOST}}/api/debts
+Authorization: {{TOKEN}}
+Content-Type: application/json
+
+{
+    "idGrupo": 47
+}
+
+############# MESSAGES ###########
+
+GET {{HOST}}/api/messages/2
+Authorization: {{TOKEN}}
+
+
+
+############# REST PASSWORD ###########
+
+# Solicitar restablecimiento de contraseña
+POST {{HOST}}/api/reset
+Content-Type: application/json
+
+{
+  "email": "lara.martin.lagares@gmail.com"
+}
+
+# Restablecer la contraseña usando el token recibido en el correo
+###
+PATCH {{HOST}}/api/reset/b9505218a5f3b9df6e501ef1abd4daaf8426ec1fb7ef38ce8bb1d8200b93
+Content-Type: application/json
+
+{
+  "password": "11111111",
+  "confirmPassword": "11111111"
+}
+
+
+############# UPLOAD IMAGES (multer) ###########
+
+POST {{HOST}}/api/upload/userimage
+Content-Type: multipart/form-data
+
+# {
+# 	"id_user": 6,
+# 	"imagen": "archivo imagen"
+# }
+
+
+
+###
+
+{{HOST}}/userimage/default.jpg
+# para pedir imagen de usuario en el front hay que usar la url anterior y añadir nombre de la imagen que se obtiene de los datos de usuario de la peticion GET {{HOST}}/api/upload/userImage/6
+
+###
+{{HOST}}/groupimage/default.jpg
+#para pedir imagen de grupo en el front hay que usar la url anterior y añadir nombre de la imagen que se obtiene de los datos de grupo de la peticion GET {{HOST}}/api/upload/groupImage/6
+
+
