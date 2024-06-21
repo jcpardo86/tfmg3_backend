@@ -31,9 +31,6 @@ const getUserByEmail = async (req, res, next) => {
 
     try {
         const [user] = await User.selectUserByEmail(req.params.email);
-        if(user.length ===0) {
-            return res.status(404).json({ fatal: 'Usuario no encontrado' });  
-        }
         res.json(user[0]); 
 
     } catch(error) {
