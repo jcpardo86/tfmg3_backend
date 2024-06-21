@@ -14,7 +14,7 @@ const mailer= async (data, destinatario, option)=> {
     let asunto = "";
     let cuerpo = "";
 
-    try {
+    
         // Construimos el mensaje según la opción (nuevo gasto, nuevo registro, nuevo grupo, reset de contraseña)
         switch(option) {
 
@@ -95,7 +95,7 @@ const mailer= async (data, destinatario, option)=> {
             case "new_group":
                 console.log("estoy en new_group")
                 console.log(data.idGrupo);
-                const grupo = await this.groupService.selectGroupById(data.idGrupo);
+                const [grupo] = await Group.selectGroupById(data.idGrupo);
                 console.log("grupo", grupo);
                 asunto = "Nuevo grupo en DIVI!";
                 cuerpo = `
@@ -104,13 +104,13 @@ const mailer= async (data, destinatario, option)=> {
                     <p style="font-size:1rem; font-weight:300;">Nos complace informarte que has sido añadido a un nuevo grupo en la aplicación DIVI para compartir gastos. Este grupo ha sido creado para facilitar la gestión de los gastos comunes de manera sencilla y eficiente.</p>
                     <p style="font-size:1rem; font-weight:500">Detalles del grupo:<p>
                     <ul>
-                        <li style="font-size:1rem; font-weight:300;">Nombre del grupo: ${data.idGrupo}</li>
-                        <li style="font-size:1rem; font-weight:300;">Descripción: ${data.idGrupo}</li>
+                        <li style="font-size:1rem; font-weight:300;">Nombre del grupo: ${grupo[0].nombre}</li>
+                        <li style="font-size:1rem; font-weight:300;">Descripción: ${grupo[0].descripcion}</li>
                     </ul>
                     <p style="font-size:1rem; font-weight:500"">¿Cómo empezar?:<p>
                     <ol>
                         <li style="font-size:1rem; font-weight:300;">Inicia sesión en tu cuenta de DIVI.</li>
-                        <li style="font-size:1rem; font-weight:300;">Selecciona en tu listado de grupos el grupo "${data.idGrupo}"</li>
+                        <li style="font-size:1rem; font-weight:300;">Selecciona en tu listado de grupos el grupo "${grupo[0].nombre}"</li>
                         <li style="font-size:1rem; font-weight:300;">Explora las funcionalidades y comienza a gestionar los gastos con tus compañeros.</li>
                     </ol>
                     <p style="font-size:1rem; font-weight:300;">Si tienes alguna pregunta o necesitas ayuda para comenzar, no dudes en ponerte en contacto con nuestro equipo de soporte.</p>
@@ -120,9 +120,7 @@ const mailer= async (data, destinatario, option)=> {
                 
                     break;
         }
-    } catch (error) {
-        next(error);
-    }
+  
 
 
     const message = {
