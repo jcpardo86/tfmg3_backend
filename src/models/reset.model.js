@@ -1,8 +1,9 @@
+//Importación de módulos externos
 const crypto = require('crypto');
 const bcrypt = require('bcryptjs');
 
-//definición de métodos para resetear password
 
+//definición de métodos para resetear password
 
 const findUserByEmail = (email) => {
   return db.query(`SELECT * FROM usuario WHERE email = ?`, [email]);
@@ -20,8 +21,6 @@ const userNewPassword = (idUser, newPassword) => {
 	const hashedPassword = bcrypt.hashSync(newPassword, 8);
   return db.query('UPDATE usuario SET password = ?, reset_password_token = NULL WHERE idUsuario = ?', [hashedPassword, idUser]);
 };
-
-
 
 //creacion de token para resetear password
 

@@ -7,6 +7,7 @@ const User = require('../models/user.model');
 
 // Definición de métodos para peticiones sobre grupos
 
+//Método para otener el listado de grupos a los que pertenece un usuario a partir de su id de usuario
 const getGroupsByUser = async (req, res, next) => {
     try {
         const [ groups ] = await Group.selectGroupsByUser(req.params.id_user);
@@ -16,6 +17,7 @@ const getGroupsByUser = async (req, res, next) => {
     };
 };
 
+//Método para obtener los datos de un grupo a partir de su id de grupo
 const getGroupById = async (req, res, next) => {
     try {
         const [ group ] = await Group.selectGroupById(req.params.id_group);
@@ -29,6 +31,7 @@ const getGroupById = async (req, res, next) => {
     };
 };
 
+//Método para obtener el listado de usuarios de un grupo a partir de su id de grupo
 const getUsersByGroup = async (req, res, next) => {
     try {
         const [ users ] = await Group.selectUsersByGroup(req.params.id_group);
@@ -38,7 +41,7 @@ const getUsersByGroup = async (req, res, next) => {
     };
 };
 
-
+//Método para obtener el estado de un grupo; 2 opciones (open/close)
 const getStatus = async (req, res, next) => {
     try {
         const [ status ] = await Group.selectStatus(req.params.id_group);
@@ -48,6 +51,7 @@ const getStatus = async (req, res, next) => {
     };
 };
 
+//Método para obtener el nombre del fichero de imagen de un grupo a partir de su id de grupo
 const getImageGroup = async (req, res, next) => {
       const id_group = req.params.id_group;
       if (!id_group) {
@@ -60,6 +64,7 @@ const getImageGroup = async (req, res, next) => {
       res.json(image);   
 };  
 
+//Método para obtener ciertos datos de un usuario de un grupo (porcentaje, rol, saldo, importe_liquidado)
 const getUserGroup = async (req, res, next) => {
     try {
         const [ groups ] = await Group.selectUserGroup(req.params.id_user, req.params.id_group);
@@ -69,7 +74,7 @@ const getUserGroup = async (req, res, next) => {
     };
 };
 
-
+//Método para insertar un grupo 
 const createGroup = async (req, res, next) => {
     try {
         const [result] = await Group.insertGroup(req.body);
@@ -79,6 +84,7 @@ const createGroup = async (req, res, next) => {
     };
 };
 
+//Método para añadir un usuario a un grupo
 const addUserToGroup = async (req, res, next) => {
     try {
         const [result] = await Group.insertUserToGroup(req.body);
@@ -94,6 +100,7 @@ const addUserToGroup = async (req, res, next) => {
     };
 };
 
+//Método para actualizar un grupo
 const updateGroup = async(req, res) => {
     try {
         const [ group ] = await Group.updateGroup(req.body);
@@ -103,7 +110,7 @@ const updateGroup = async(req, res) => {
     };
 };
 
-
+//Método para actualizar el estado de un grupo; 2 opciones (open y close)
 const updateStatusGroup = async (req, res, next) => {
     const { id_group } = req.params;
     try {
@@ -114,6 +121,7 @@ const updateStatusGroup = async (req, res, next) => {
     };
 };
 
+//Método para borrar un grupo
 const deleteGroup = async (req, res, next) => {
     const {id_group} = req.params; 
     try {

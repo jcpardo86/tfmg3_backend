@@ -10,6 +10,7 @@ const { createToken } = require('../helpers/token_utils');
 // Definición de métodos para peticiones sobre usuarios
 
 
+//Método para obtener usuario a partir de su id de usuario
 const getUserById = async (req, res, next) => {
 
     try {
@@ -25,10 +26,14 @@ const getUserById = async (req, res, next) => {
     };
 };
 
+//Método para obtener usuario a partir de su email
 const getUserByEmail = async (req, res, next) => {
 
     try {
         const [user] = await User.selectUserByEmail(req.params.email);
+        if(user.length ===0) {
+            return res.status(404).json({ fatal: 'Usuario no encontrado' });  
+        }
         res.json(user[0]); 
 
     } catch(error) {
@@ -36,24 +41,25 @@ const getUserByEmail = async (req, res, next) => {
     };
 };
 
-const getImageUser = async (req, res) => {
+//Método para obtener el nombre del fichero de imagen de usuario a partir de su id de usuario
+const getImageUser = async (req, res, next) => {
 
-  const userId = req.params.id_user;
-
-  if (!userId) {
-	return res.status(400).json('Faltan datos requeridos');
-  }
-
-  const [image] = await User.selectImageUser(userId);
-
-  if (!image) {
-	return res.status(404).json('Imagen no encontrada');
-  }
-
-  res.json(image);
-
+    const userId = req.params.id_user;
+    if (!userId) {
+        return res.status(400).json('Faltan datos requeridos');
+    }
+    try {
+        const [image] = await User.selectImageUser(userId);
+        if (!image) {
+	        return res.status(404).json('Imagen no encontrada');
+        }
+        res.json(image);
+    } catch (error) {
+        next(error);
+    }
 };
 
+//Método para insertar usuario en BBDD con password encriptada
 const userRegister = async (req, res, next) => {
 
     try {
@@ -64,7 +70,7 @@ const userRegister = async (req, res, next) => {
             return res.status(500).json({ error: 'Registro no correcto'});          
         }
 
-        // Envío de mail informativo de registro al usuario
+        // Envío de mail de bienvenida a usuario informando de registro en DIVI
         const [user] = await User.selectUserByEmail(req.body.email);
         Mail.mailer(req.body, user[0], "new_register");
 
@@ -75,6 +81,7 @@ const userRegister = async (req, res, next) => {
     }
 }; 
 
+//Método para hacer login - búsqueda de usuario a partir de su email y comprobación de password
 const userLogin = async (req, res, next) => {
 
     try {
@@ -99,6 +106,7 @@ const userLogin = async (req, res, next) => {
     }
 };
 
+//Método para actualizar los datos de un usuario
 const updateUserById = async (req, res, next) => {
 
     try {

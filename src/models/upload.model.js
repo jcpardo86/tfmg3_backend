@@ -11,5 +11,4 @@ const uploadGroupImage = (image, idGrupo) => {
 module.exports = {
 	uploadUserImage,
 	uploadGroupImage,
-
 }
