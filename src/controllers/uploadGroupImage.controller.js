@@ -22,22 +22,23 @@ const upload = multer({ storage: storage });
 
 exports.upload = upload.single('imagen');
 
-exports.uploadGroupImage = async (req, res) => {
+exports.uploadGroupImage = async (req, res, next) => {
 
   const idGrupo = req.body.idGrupo;
-
   if (!idGrupo || !req.file) {
     return res.status(400).json('Faltan datos requeridos');
   }
 
   const image = req.file.filename;
-
-	const uploadGroupImg = await uploadGroupImage(image, idGrupo)
-
-	if (uploadGroupImg.error) {
-		return res.status(500).json('Error al subir la imagen de grupo');
-	}
+  try {
+	  const uploadGroupImg = await uploadGroupImage(image, idGrupo)
+	  if (uploadGroupImg.error) {
+		  return res.status(500).json('Error al subir la imagen de grupo');
+	  }
 
     res.json('Imagen subida correctamente');
 
+  } catch(error) {
+    next(error);
+  }
 };

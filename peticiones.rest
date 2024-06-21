@@ -1,13 +1,15 @@
 @PORT = 3000
 @HOST = http://localhost:{{PORT}}
 
-@TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjo1MSwiZXhwIjoxNzE4ODE4NTgyLCJpYXQiOjE3MTg2MDI1ODJ9.ie3Z6GNgCjTRKj57gNwf2w2xKK60Ty0RnGY4BEwv_2s
+@TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjo1MSwiZXhwIjoxNzE5MTU4Mzc0LCJpYXQiOjE3MTg5NDIzNzR9.C_xvArveC3eXWOyYbdqUoB9vUZt7ugL_KZ20Gyy9rhg
+
+
 ################ GROUPS ####################
-GET {{HOST}}/api/groups/13
+GET {{HOST}}/api/groups/87
 Authorization: {{TOKEN}}
 
 ###
-GET {{HOST}}/api/groups/group/7
+GET {{HOST}}/api/groups/group/84
 Authorization: {{TOKEN}}
 
 ###
@@ -92,7 +94,7 @@ Content-Type: application/json
 
 {
     "email": "lara.martin.lagares@gmail.com",
-    "password": "12345"
+    "password": "123456"
 }
 
 ###
@@ -109,7 +111,7 @@ Authorization: {{TOKEN}}
 
 ################ SPENTS ####################
 ###
-GET {{HOST}}/api/spents/75
+GET {{HOST}}/api/spents/12
 Authorization: {{TOKEN}}
 
 ###
@@ -238,10 +240,7 @@ Content-Type: multipart/form-data
 # 	"imagen": "archivo imagen"
 # }
 
-
-
 ###
-
 {{HOST}}/userimage/default.jpg
 # para pedir imagen de usuario en el front hay que usar la url anterior y añadir nombre de la imagen que se obtiene de los datos de usuario de la peticion GET {{HOST}}/api/upload/userImage/6
 

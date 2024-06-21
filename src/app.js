@@ -33,7 +33,7 @@ app.use((error, req, res, next) => {
 app.use('/userimage', express.static(path.join(__dirname, 'images', 'user')));
 
 
-// Sirve archivos estáticos desde la carpeta images/groups
+// Sirve archivos estáticos desde la carpeta images/group
 app.use('/groupimage', express.static(path.join(__dirname, 'images', 'group')));
 
 
