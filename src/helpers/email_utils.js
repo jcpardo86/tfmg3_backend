@@ -93,7 +93,10 @@ const mailer= async (data, destinatario, option)=> {
                 break;
 
             case "new_group":
+                console.log("estoy en new_group")
+                console.log(data.idGrupo);
                 const grupo = await this.groupService.selectGroupById(data.idGrupo);
+                console.log("grupo", grupo);
                 asunto = "Nuevo grupo en DIVI!";
                 cuerpo = `
                     <p style="font-size:1rem; font-weight:300;">Hola ${destinatario.nombre}!</p>
@@ -101,8 +104,8 @@ const mailer= async (data, destinatario, option)=> {
                     <p style="font-size:1rem; font-weight:300;">Nos complace informarte que has sido añadido a un nuevo grupo en la aplicación DIVI para compartir gastos. Este grupo ha sido creado para facilitar la gestión de los gastos comunes de manera sencilla y eficiente.</p>
                     <p style="font-size:1rem; font-weight:500">Detalles del grupo:<p>
                     <ul>
-                        <li style="font-size:1rem; font-weight:300;">Nombre del grupo: ${grupo.nombre}</li>
-                        <li style="font-size:1rem; font-weight:300;">Descripción: ${grupo.descripcion}</li>
+                        <li style="font-size:1rem; font-weight:300;">Nombre del grupo: ${data.idGrupo}</li>
+                        <li style="font-size:1rem; font-weight:300;">Descripción: ${data.idGrupo}</li>
                     </ul>
                     <p style="font-size:1rem; font-weight:500"">¿Cómo empezar?:<p>
                     <ol>

@@ -57,11 +57,15 @@ const getImageGroup = async (req, res, next) => {
       if (!id_group) {
         return res.status(400).json('Faltan datos requeridos');
       }
-      const [image] = await Group.selectImageGroup(id_group);
-      if (!image) {
-        return res.status(404).json('Imagen no encontrada');
-      }
-      res.json(image);   
+      try {
+        const [image] = await Group.selectImageGroup(id_group);
+        if (!image) {
+            return res.status(404).json('Imagen no encontrada');
+        }
+      res.json(image);
+    } catch (error) {
+        next(error);
+    }  
 };  
 
 //Método para obtener ciertos datos de un usuario de un grupo (porcentaje, rol, saldo, importe_liquidado)
@@ -91,8 +95,9 @@ const addUserToGroup = async (req, res, next) => {
 
         //Enviamos email al usuario para informarle de que ha sido añadido a un grupo
         const [user] = await User.selectUserById(req.body.idUsuario);
-        await Mail.mailer(req.body, user[0], "new_group");
-        
+        console.log('usuario',user);
+        //await Mail.mailer(req.body, user[0], "new_group");
+  
         res.json(result);
         
     } catch(error) {
@@ -101,12 +106,12 @@ const addUserToGroup = async (req, res, next) => {
 };
 
 //Método para actualizar un grupo
-const updateGroup = async(req, res) => {
+const updateGroup = async(req, res, next) => {
     try {
         const [ group ] = await Group.updateGroup(req.body);
         res.json(group);
     } catch(err) {
-        res.status(500).json({ error: err.message });
+        next(error);
     };
 };
 
