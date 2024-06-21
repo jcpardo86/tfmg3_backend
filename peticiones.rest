@@ -9,7 +9,7 @@ GET {{HOST}}/api/groups/87
 Authorization: {{TOKEN}}
 
 ###
-GET {{HOST}}/api/groups/group/84
+GET {{HOST}}/api/groups/group/97
 Authorization: {{TOKEN}}
 
 ###

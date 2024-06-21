@@ -95,8 +95,8 @@ const addUserToGroup = async (req, res, next) => {
 
         //Enviamos email al usuario para informarle de que ha sido añadido a un grupo
         const [user] = await User.selectUserById(req.body.idUsuario);
-        console.log('usuario',user);
-        //await Mail.mailer(req.body, user[0], "new_group");
+        await Mail.mailer(req.body, user[0], "new_group");
+        console.log("estoy aquí");
   
         res.json(result);
         
