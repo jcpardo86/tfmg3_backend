@@ -32,7 +32,7 @@ const mailer= async (data, destinatario, option)=> {
             <p style="font-size:1rem;"><strong>Detalles del nuevo gasto:<strong><p>
             <ul>
                 <li style="font-size:1rem; font-weight:300;"><span style="font-weight:500">Descripción:  </span>${data.descripcion}</li>
-                <li style="font-size:1rem; font-weight:300;"><span style="font-weight:500">Importe:  </span>${data.importe}</li>
+                <li style="font-size:1rem; font-weight:300;"><span style="font-weight:500">Importe:  </span>${data.importe} €</li>
                 <li style="font-size:1rem; font-weight:300;"><span style="font-weight:500">Fecha:  </span>${data.fecha}</li>
                 <li style="font-size:1rem; font-weight:300;"><span style="font-weight:500">Pagador: </span>${user[0].nombre}</li>
             </ul>

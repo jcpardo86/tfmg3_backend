@@ -32,8 +32,6 @@ const calculateNewDebts = async (data) => {
         }
     } 
 
-    console.log(pagador[0], receptor[0]);
-
     // Bucle para ir calculando las deudas en función de los saldos de pagadores y receptores. Los resultamos se almacenan en array resultados
     while( i !== pagador.length && j !== receptor.length ){
 
