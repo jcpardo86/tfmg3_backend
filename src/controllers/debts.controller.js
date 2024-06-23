@@ -8,12 +8,14 @@ const NewDebts = require('../helpers/debts_utils');
 
 // Definición de métodos para peticiones sobre deudas
 
+//Método para obtener el listado de deudas de un grupo a partir de su id de grupo
 const getDebtsByGroup = async (req, res, next) => {
     const { id_group } = req.params;
     try {
         const [group] = await Group.selectGroupById(id_group);
         const [debts] = await Debt.selectDebtsByGroup(id_group);
 
+        // Añadimos por cada deuda recibida de bbdd las propiedades nombre_usuario (pagador), nombre_receptor y nombre_grupo
         for(let i in debts) {
             const [user_1] = await User.selectUserById(debts[i].idUsuario);
             const [user_2] = await User.selectUserById(debts[i].receptor)
@@ -29,13 +31,16 @@ const getDebtsByGroup = async (req, res, next) => {
     }
 };
 
+//Método para actualizar el listado (no pagadas) de un grupo
 const updateDebtsByGroup = async (req, res, next) => {
 
     const arrIdUpdated = [];
 
     try {
+        // Llamada a método para obtener el listado de deudas actualizado
         const resultados = await NewDebts.calculateNewDebts(req.body);
 
+        // Si ya existe en BBDD una deuda para mismo pagador y receptor que no está pagada, entonces actualizamos su importe
         for(let resultado of resultados) {
             const [id_debt] = await Debt.selectDebt(req.body.idGrupo, resultado.idPagador, resultado.idReceptor);
             if (id_debt.length>0 && id_debt[0].is_pagada!==1) {
@@ -44,6 +49,7 @@ const updateDebtsByGroup = async (req, res, next) => {
             }
         }
 
+        // Las deudas de BBDD que no han sido actualizadas en el bucle anterior y que no están pagadas, las eliminamos
         const [debts] = await Debt.selectDebtsByGroup(req.body.idGrupo);
         for(let i = 0; i<debts.length; i++) {
             let borrar = 1; 
@@ -60,6 +66,7 @@ const updateDebtsByGroup = async (req, res, next) => {
             }
         }
 
+        // Si no existía ya deuda en BBDD para mismo pagador y receptor, entonces la insertamos
         for(let resultado of resultados) {
             const [id_debt] = await Debt.selectDebt(req.body.idGrupo, resultado.idPagador, resultado.idReceptor);
             if (id_debt.length===0 || id_debt[0].is_pagada ===1) {
@@ -79,6 +86,8 @@ const updateDebtsByGroup = async (req, res, next) => {
         next(error);
     }
 };
+
+//Método para pasar a estado pagada una deuda --> (is_pagada = 1) 
 
 const updateStatus = async (req, res, next) => {
     try {

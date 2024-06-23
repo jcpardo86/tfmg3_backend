@@ -6,7 +6,6 @@ const path = require('path');
 const { uploadUserImage} = require('../models/upload.model'); 
 
 
-
 // Definición de métodos para peticiones sobre subida de imágen de usuario
 
 const storage = multer.diskStorage({
@@ -23,20 +22,24 @@ const upload = multer({ storage: storage });
 
 exports.upload = upload.single('imagen');
 
-exports.uploadUserImage = async (req, res) => {
-
+exports.uploadUserImage = async (req, res, next) => {
+  
 	const userId = req.body.idUsuario;
-
   if (!userId || !req.file) {
     return res.status(400).json('Faltan datos requeridos');
   }
 
   const image = req.file.filename;
-	const uploadUserImg = await uploadUserImage(image, userId)
+  try {
+	  const uploadUserImg = await uploadUserImage(image, userId)
+	  if (uploadUserImg.error) {
+		  return res.status(500).json('Error al subir la imagen');
+	  }
 
-	if (uploadUserImg.error) {
-		return res.status(500).json('Error al subir la imagen');
-	}
     res.json('Imagen subida correctamente');
+
+  } catch (error) {
+    next(error);
+  }
 };
 
